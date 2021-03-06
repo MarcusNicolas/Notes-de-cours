@@ -1,0 +1,40 @@
+% Macros mathématiques de base
+\startenvironment env_MacrosBase
+
+  % Polices
+
+  % TODO : redéfinir \cal
+
+
+  % Écriture de preuves
+
+  \define[2]\demEquivalence{
+    \starttabulate[|cmw(1cm)|p|]
+    \NC \p{\Rightarrow} \NC #1 \NC \NR
+    \TB[halfline]
+    \NC \p{\Leftarrow}  \NC #2 \NC \NR
+    \stoptabulate}
+
+  \define[2]\demDoubleInclusion{
+    \starttabulate[|cmw(1cm)|p|]
+    \NC \p{\subseteq} \NC #1 \NC \NR
+    \TB[halfline]
+    \NC \p{\supseteq}  \NC #2 \NC \NR
+    \stoptabulate}
+
+
+  % Quantificateurs
+
+  \define[1]\ilExiste{\exists{#1},\;}
+  \define[1]\pourTout{\forall{#1},\;}
+
+
+
+
+  % MACROS A TRIER
+
+  \define[1]\p{\mathopen{}\left(#1\right)\mathclose{}}
+
+  \define\reels{\begingroup\mathbf{}R\endgroup}
+
+\stopenvironment

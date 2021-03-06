@@ -1,0 +1,69 @@
+\startcomponent c_GéométrieConvexe
+\product prd_GéométrieRDP
+
+  \startchapter[title={Un peu de géométrie convexe}]
+
+
+    \startsection[title={Ensembles convexes}]
+
+      Lorem ipsum dolor sit amet
+
+
+      \starttheoreme[Carathéodory]
+        Tout point de l'enveloppe convexe d'une partie $A$ de $\reels^d$ est dans l'enveloppe convexe de $d+1$ points de $A$.
+      \stoptheoreme
+
+      \startdiscussion[title=oui]
+        Ma discussion
+      \stopdiscussion
+
+
+      \startdem
+        Étant donné $y \in \enveloppeConvexe{A}$, il existe un entier $r$ minimal, des réels positifs $\lambda_i$ et des points $x_i$ de $A$ vérifiant :
+        \startformula
+          y = \sum_{i=0}^r \lambda_i x_i
+          \quad\text{et}\quad
+          \sum_{i=0}^r \lambda_i = 1
+        \stopformula
+        Si $r \geq d+1$, alors la famille $x_0, \dots, x_r$ n'est pas affinement indépendante. Autrement dit, il existe des réels $\mu_0, \dots, \mu_r$ non tous nuls tels que :
+        \startformula
+          \sum_{i=0}^r \mu_i x_i = 0
+          \quad\text{et}\quad
+          \sum_{i=0}^r \mu_i = 0
+        \stopformula
+        On peut supposer avoir $\mu_r > 0$ et $\lambda_r / \mu_r < \lambda_i / \mu_i$ pour tout $i$ tel que $\mu_i > 0$. Alors :
+        \startformula
+          x_j = -\sum_{i=0}^{r-1} \frac{\mu_i}{\mu_r} x_i
+          \quad\text{puis}\quad
+          y = \sum_{i=^0}^{r-1}
+            \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} x_i
+        \stopformula
+        et on vérifie immédiatement que :
+        \startformula
+          \sum_{i=0}^{r-1} \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} = 1
+          \qquad\text{et}\qquad
+          \pourTout{i < r} \lambda_i - \frac{\lambda_r}{\mu_r} \mu_i \geq 0
+        \stopformula
+        C'est absurde car $r$ est supposé minimal, donc $r \leq d$.
+      \stopdem
+
+
+      \startdefinition
+        Soit $K$ une partie convexe fermée de $\reels^d$ de dimension $d$. Une \defterme{face exposée} de $K$ est une partie de $K$ vide ou de la forme $H \cap K$ avec $H$ hyperplan d'appui de $K$.
+
+        \blank[halfline]
+
+        L'ensemble des faces exposées de $K$ est noté $\facesMax\p{K}$, et DAOJDA2Z.
+      \stopdefinition
+
+    \stopsection
+
+
+
+    \startsection[title={Polytopes}]
+      
+    \stopsection
+
+  \stopchapter
+
+\stopcomponent

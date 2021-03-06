@@ -1,0 +1,208 @@
+\startenvironment env_NotesDeCours
+
+  % Couleurs
+
+  \usecolors[crayola]
+
+  \definecolor[CouleurTraits][black]%CosmicCobalt
+
+
+
+
+  % Macros générales (non mathématiques)
+
+  \define[1]\defterme{\begingroup\em #1\endgroup}
+
+
+  % Layout
+
+  \mainlanguage[fr]
+  \language[fr]
+  \setcharacterspacing[frenchpunctuation]
+
+  \setuplayout[
+    backspace=20mm,
+    width=fit,
+    topspace=10mm,
+    height=fit]
+
+  \setuppagenumbering[
+    %alternative=doublesided,
+    state=start,
+    location={header,right}]
+
+  \setupbodyfont[gentium, 12pt]
+
+
+  % Titres de section
+
+  \setupthinrules[
+    rulethickness=2bp,
+    color=CouleurTraits]
+
+  \setuphead[chapter][
+    alternative=middle,
+    after=\thinrule,
+    style=\bfd]
+
+  \setuphead[section][style=\bfb]
+
+
+
+  % Environnements mathématiques
+
+  % Démonstration
+
+  \definenarrower[demCORPS][
+    default={left,right},
+    left=1cm,
+    right=.5cm]
+
+  \define\startdem{
+    \begingroup
+    \setuptextrules[
+      rulethickness=.5bp,
+      rulecolor=CouleurTraits,
+      inbetween=\tf,
+      style=\it,
+      bodyfont=small]
+    \startdemCORPS
+    \starttextrule{Démonstration}
+    \blank[halfline,samepage]}
+
+  \define\stopdem{
+    \blank[halfline,samepage]
+    \stoptextrule
+    \stopdemCORPS
+    \endgroup
+    \blank[2*line]}
+
+  
+
+
+  % Style théorème
+
+  \definetextbackground[lisereGauche][
+    mp=lisereGaucheMP,
+    location=paragraph,
+    before={\blank[quarterline]},
+    leftoffset=1em,
+    topoffset=0ex,
+    bottomoffset=0ex,
+    rightoffset=0em,
+    rulethickness=1bp,
+    framecolor=CouleurTraits]
+
+  \startuseMPgraphic{lisereGaucheMP}
+    begingroup;
+      for i=1 upto nofmultipars :
+        draw leftboundary multipars[i]
+        boxlineoptions withpen pensquare scaled boxlinewidth ;
+      endfor ;
+    endgroup;
+  \stopuseMPgraphic
+
+  \setupenumeration[
+    title=yes,
+    alternative=hanging,
+    titlestyle=\bf,
+    style=\it,
+    counter=thm,
+    width=fit,
+    titleleft={---\enspace},
+    titleright=,
+    after={\blank[5*quarterline]},
+    way=bysection,
+    prefixsegments=chapter:section,
+    prefix=yes]
+
+
+  % Théorème
+
+  \defineenumeration[theoremeENUM]   [text={Théorème}]
+  \defineenumeration[propositionENUM][text={Proposition}]
+  \defineenumeration[lemmeENUM]      [text={Lemme}]
+  \defineenumeration[corollaireENUM] [text={Corollaire}]
+
+  \define\starttheoreme
+    {\dosingleempty\dostarttheoreme}
+  \define\startproposition
+    {\dosingleempty\dostartproposition}
+  \define\startlemme
+    {\dosingleempty\dostartlemme}
+  \define\startcorollaire
+    {\dosingleempty\dostartcorollaire}
+
+  \def\dostarttheoreme[#1]{
+      \starttheoremeENUM[title=#1]
+      \page[no]
+      \startlisereGauche}
+  \def\dostartproposition[#1]{
+      \startpropositionENUM[title=#1]
+      \page[no]
+      \startlisereGauche}
+  \def\dostartlemme[#1]{
+      \startlemmeENUM[title=#1]
+      \page[no]
+      \startlisereGauche}
+  \def\dostartcorollaire[#1]{
+      \startcorollaireENUM[title=#1]
+      \page[no]
+      \startlisereGauche}
+
+  \define\stoptheoreme{
+    \stoplisereGauche
+    \stoptheoremeENUM}
+  \define\stopproposition{
+    \stoplisereGauche
+    \stoppropositionENUM}
+  \define\stoplemme{
+    \stoplisereGauche
+    \stoplemmeENUM}
+  \define\stopcorollaire{
+    \stoplisereGauche
+    \stopcorollaireENUM}
+
+
+  % Définition
+
+  \defineenumeration[definitionENUM][
+    text={Définition},
+    style=\tf]
+    
+
+  \define\startdefinition
+    {\dosingleempty\dostartdefinition}
+
+  \def\dostartdefinition[#1]{
+    \startdefinitionENUM[title=#1]
+    \page[no]
+    \startlisereGauche}
+    
+  \define\stopdefinition{
+    \stoplisereGauche
+    \stopdefinitionENUM}
+  
+
+  % Discussion
+
+  \defineenumeration[discussionENUM][
+    text={},
+    stopper={.},
+    style=\tf,
+    titlestyle=\it,
+    titleleft=,
+    titleright={.\enspace---}]
+    
+
+  \define\startdiscussion
+    {\dosingleempty\dostartdiscussion}
+
+  \def\dostartdiscussion[#1]{
+    \startdiscussionENUM[title=#1]}
+    
+  \define\stopdiscussion{
+    \stopdiscussionENUM}
+
+
+\stopenvironment
