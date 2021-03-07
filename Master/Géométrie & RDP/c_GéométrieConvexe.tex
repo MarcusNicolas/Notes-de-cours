@@ -35,7 +35,7 @@
         \startformula
           x_j = -\sum_{i=0}^{r-1} \frac{\mu_i}{\mu_r} x_i
           \quad\text{puis}\quad
-          y = \sum_{i=^0}^{r-1}
+          y = \sum_{i=0}^{r-1}
             \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} x_i
         \stopformula
         et on vérifie immédiatement que :
@@ -50,11 +50,19 @@
 
       \startdefinition
         Soit $K$ une partie convexe fermée de $\reels^d$ de dimension $d$. Une \defterme{face exposée} de $K$ est une partie de $K$ vide ou de la forme $H \cap K$ avec $H$ hyperplan d'appui de $K$.
-
         \blank[halfline]
-
-        L'ensemble des faces exposées de $K$ est noté $\facesMax\p{K}$, et DAOJDA2Z.
+        L'ensemble des faces exposées de $K$ est noté $\facesExp\p{K}$.
       \stopdefinition
+
+
+      \startproposition
+        Soit $K$ un convexe fermé de dimension $d$ :
+        \startlisteOrd[style=compact]
+          \startitem un test \startlisteOrd \item oui \item non \stoplisteOrd \stopitem
+
+          \item deux
+        \stoplisteOrd
+      \stopproposition
 
     \stopsection
 
