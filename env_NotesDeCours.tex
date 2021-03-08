@@ -31,7 +31,10 @@
     state=start,
     location={footer,middle}]
 
-  \setupbodyfont[schola,10pt]
+
+  \setupwhitespace[big]
+
+  %\setupbodyfont[schola,10pt]
 
   % Titres de section
 
@@ -52,16 +55,21 @@
 
   % Listes structurées
 
-  \def\sansItalique{%
+  \define\sansItalique{%
     \doif{\fontalternative}{it}{\tf}%
-    \doif{\fontalternative}{bi}{\bf}}
+    \doif{\fontalternative}{bi}{\bf}%
+  }
 
-  \defineconversion[romCONV][(\romannumerals]
+  \defineconversion[rParCONV][\sansItalique(\romannumerals]
   
   \setupitemize[leftmargin=1.5em]
 
   \setupitemize[1][n]
   \setupitemize[2][a][stopper={)}]
+
+
+  %ds
+
 
   \define\startlisteOrd
     {\dodoubleempty\dostartlisteOrd}
@@ -75,21 +83,25 @@
     %
     \getparameters[LISTEORD][#1]%
     %
-    %
     \processaction[\LISTEORDstyle][
       compact=>{\setupitemize[
-        inbetween={\blank[nowhite]},
-        before={\blank[nowhite]},
-        after={\blank[nowhite]}]},
+        inbetween={\blank[quarterline]},
+        before={\blank[quarterline]},
+        after={\blank[quarterline]}]},
+
       aere=>{\setupitemize[
         inbetween={\blank[line]},
         before={\blank[line]},
         after={\blank[line]}]}
     ]%
     %
-    \doifelse{#2}{r}
-      {\startitemize[romCONV][stopper={)}, width=2em]}
-      {\startitemize}}
+    \doifinset{fin}{#2}
+      {\setupitemize[after=]}%
+    %
+    \doifinsetelse{r}{#2}
+      {\startitemize[rParCONV][stopper={)}, width=2em]}
+      {\startitemize}%
+    }
 
   \define\stoplisteOrd
     {\stopitemize\endgroup}
@@ -159,9 +171,10 @@
     titleleft={---\enspace},
     titleright=,
     after={\blank[5*quarterline]},
-    way=bysection,
     prefixsegments=chapter:section,
     prefix=yes]
+
+  \setupcounter[thm][way=bysection]
 
 
   % Théorème

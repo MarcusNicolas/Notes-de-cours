@@ -6,16 +6,14 @@
 
     \startsection[title={Ensembles convexes}]
 
-      Lorem ipsum dolor sit amet
+      \startdiscussion
+        On rappelle, étant donné un espace affine $A$ sur $\reels$, qu'une partie $C \subseteq A$ est dite \defterme{convexe} lorsque le segment $\segment{x}{y}$ est contenu dans $C$ pour tout couple $\p{x, y}$ de points de $C$.
+      \stopdiscussion
 
 
       \starttheoreme[Carathéodory]
         Tout point de l'enveloppe convexe d'une partie $A$ de $\reels^d$ est dans l'enveloppe convexe de $d+1$ points de $A$.
       \stoptheoreme
-
-      \startdiscussion[title=oui]
-        Ma discussion
-      \stopdiscussion
 
 
       \startdem
@@ -56,13 +54,44 @@
 
 
       \startproposition
-        Soit $K$ un convexe fermé de dimension $d$ :
-        \startlisteOrd[style=compact]
-          \startitem un test \startlisteOrd \item oui \item non \stoplisteOrd \stopitem
-
-          \item deux
+        Soit $K$ un convexe fermé de dimension $d$.
+        \startlisteOrd[style=compact][fin]
+          \startitem
+            Les éléments de $\facesExp\p{K}$ sont des parties convexes fermées de $\frontiere{K}$.
+          \stopitem
+          \startitem
+            L'ensemble $\facesExp\p{K}$ est stable par intersections finies.
+          \stopitem
         \stoplisteOrd
       \stopproposition
+
+      \startdem
+        \startlisteOrd
+          \startitem
+            Clair.
+          \stopitem
+
+          \startitem
+            Soient $F_1, \dots, F_m \in \facesExp\p{K}$. On note :
+            \startformula
+              F = \bigcap_{i=1}^m F_i
+            \stopformula
+            Si $F$ est vide alors il n'y a rien à faire. Sinon, quitte à translater $K$, on peut supposer que $0 \in F$. Il existe alors pour tout $i$ un vecteur non nul $u_i$ tel que, si $H_i$ désigne l'hyperplan d'équation $\produitScalaire{x}{u_i} = 0$ :
+            \startformula
+              F_i = H_i \cap K
+              \quad\text{et}\quad
+              \pourTout{x \in K} \produitScalaire{x}{u_i} \leq 0
+            \stopformula
+            Alors, si $u = \sum u_i$ (MONTRER QUE $u \neq 0$) et si $H$ désigne l'hyperplan d'équation $\produitScalaire{x}{u} \leq 0$ :
+            \startformula
+              F = H \cap K
+              \quad\text{et}\quad
+              \pourTout{x \in K} \produitScalaire{x}{u} \leq 0
+            \stopformula
+            Finalement, $H$ est un hyperplan d'appui de $K$ en $0$ et $F \in \facesExp\p{K}$.
+          \stopitem
+        \stoplisteOrd
+      \stopdem
 
     \stopsection
 
@@ -70,6 +99,99 @@
 
     \startsection[title={Polytopes}]
       
+    \stopsection
+
+
+    \startsection[title={Cellulations}]
+
+    \stopsection
+
+
+
+    \startsection[title={Simplexes et complexes simpliciaux}]
+      \startdefinition
+        Un \defterme{simplexe} est une cellule dont les points extrémaux sont affinement indépendants.
+      \stopdefinition
+
+      METTRE LA REMARQUE
+
+      \startdefinition
+        Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que :
+        \startlisteOrd[style=compact][r]
+          \startitem
+            chaque face d'un simplexe de $\Delta$ est dans $\Delta$;
+          \stopitem
+
+          \startitem
+            l'intersection de deux simplexes de $\Delta$ est une face commune aux deux.
+          \stopitem
+        \stoplisteOrd
+        Un \defterme{sous-complexe} de $\Delta$ est un complexe simplicial $\Sigma \subseteq \Delta$.
+      \stopdefinition
+
+      METTRE L'EXEMPLE
+
+      \startdefinition
+        Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique :
+        \startformula
+          \realisation{\Delta} = \bigcup \Delta
+        \stopformula
+        Une \defterme{triangulation} d'un espace topologique $X$ est alors la donnée d'un complexe simplicial $\Delta$ et d'un homéomorphisme $X \iso \realisation{\Delta}$.
+      \stopdefinition
+
+      \startdefinition
+        Soit $\Delta$ un complexe simplicial.\\
+        Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que :
+        \startformula
+          \realisation{\Sigma} = \realisation{\Delta}
+        \stopformula
+        et dont chaque simplexe est inclus dans un simplexe de $\Delta$.
+      \stopdefinition
+
+
+      \starttheoreme
+        Deux complexes simpliciaux qui réalisent le même polyèdre (A DEFINIR) possèdent une subdivision commune.
+      \stoptheoreme
+
+      \startdem
+        Soient $\Delta_1$ et $\Delta_2$ deux complexes simpliciaux de $\reels^d$ tels que :
+        \startformula
+          \realisation{\Delta_1} = \realisation{\Delta_2}
+        \stopformula
+        On va construire une suite croissante $\famille{\Sigma_k}{k \leq d}$ de complexes vérifiant pour tout $k$ :
+        \startlisteOrd[style=compact][r]
+          \startitem
+            $\dim{\Sigma_k} \leq k$
+          \stopitem
+
+          \startitem
+            si $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ sont d'intersection $k$-dimensionnelle :
+            \startformula
+              \sigma_1 \cap \sigma_2 = 
+                \bigcup_{
+                  \startsubstack
+                    \sigma \in \Sigma_k \NR
+                    \sigma \subseteq \sigma_1 \cap \sigma_2 \NR
+                  \stopsubstack
+                } {\sigma}
+            \stopformula
+          \stopitem
+
+          \startitem
+            $\realisation{\Sigma_k} = \displaystyle \bigcup_{\dim\p{\sigma_1 \cap \sigma_2} \leq k} \p{\sigma_1 \cap \sigma_2}$
+          \stopitem
+        \stoplisteOrd
+
+        On pose naturellement :
+        \startformula
+          \Sigma_0 = \comprehension{\frac{x}{y}}{dz}
+        \stopformula
+      \stopdem
+
+
+      \startdiscussion[Subdivision cristalline]
+        Oui
+      \stopdiscussion
     \stopsection
 
   \stopchapter

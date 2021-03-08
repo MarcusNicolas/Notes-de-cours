@@ -8,6 +8,7 @@
 
   % Écriture de preuves
 
+
   \define[2]\demEquivalence{
     \starttabulate[|cmw(1cm)|p|]
     \NC \p{\Rightarrow} \NC #1 \NC \NR
@@ -33,7 +34,37 @@
 
   % MACROS A TRIER
 
-  \define[1]\p{\mathopen{}\left(#1\right)\mathclose{}}
+
+  \define\p
+    {\dosingleempty\dop}
+
+  \def\dop[#1]#2{%
+    \iffirstargument%
+      #1(#2#1)%
+    \else%
+      \mathopen{}\left(#2\right)\mathclose{}%
+    \fi%
+  }
+
+
+
+  \define[1]\abs{\mathopen{}\left\vert#1\right\vert\mathclose{}}
+
+
+  \define[1]\classe
+    {\mathopen{}\left\{#1\right\}\mathclose{}}
+  
+  \define[2]\comprehension
+    {\classe{\;#1\;\middle|\;#2\;}}
+
+
+  \define[2]\famille{\p{#1}_{#2}}
+
+  \define[2]\segment{\left\[ #1, #2 \right\]}
+
+
+  \define\iso{\simeq}
+
 
   \define\reels{\begingroup\mathbf{}R\endgroup}
 
