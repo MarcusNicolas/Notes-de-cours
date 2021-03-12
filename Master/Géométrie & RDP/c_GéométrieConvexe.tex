@@ -4,7 +4,7 @@
 \startchapter[title={Un peu de géométrie convexe}]
 
   %%%
-  \startsection[title={Ensembles convexes}]
+  \startsection[title={Faces d'un ensemble convexe}]
 
     \startdiscussion[Convexité]
       On rappelle, étant donné un espace affine $A$ sur $\reels$, qu'une partie $C \subseteq A$ est dite \defterme{convexe} lorsque le segment $\segment{x}{y}$ est contenu dans $C$ pour tout couple $\p{x, y}$ de points de $C$. La \defterme{dimension} de $C$, notée $\dim{C}$, est alors la dimension de son enveloppe affine $\aff{C}$. L'intérieur et la frontière de $C$ sont toujours considérés relativement à l'espace topologique $\aff{C}$.
@@ -63,7 +63,7 @@
 
     \startproposition
       Étant donné un convexe fermé $K$:
-      \startlisteNum[compact]
+      \startlisteNum[fin]
         \startitem
           Les éléments de $\facesExp\p{K}$ sont des parties convexes fermées de $\frontiere{K}$.
         \stopitem
@@ -126,6 +126,11 @@
     \stopdem
 
 
+    \startremarque
+      ON VOUDRAIT LA PROP DE TRANSITIVITÉ POUR LES FACES EXPOSEES MAIS C'EST FAUX (mettre un diagramme) % TODO
+    \stopremarque
+
+
     \startdefinition
       Une \defterme{face} de $K$ est une partie $F$ de $K$ telle qu'il existe une suite de convexes fermés :
       \startformula
@@ -140,6 +145,10 @@
     \startremarque
       L'ensemble des faces propres maximales de $K$ est exactement $\facesMax\p{K}$.
     \stopremarque
+
+    \startdiscussion[Transitivité]
+      Si $F$ est une face de $K$
+    \stopdiscussion
 
 
     \startcorollaire
@@ -173,13 +182,9 @@
   \startsection[title={Polytopes convexes}]
 
     \startdefinition
-      Un \defterme{polytope convexe} est un convexe qui est intersection finie de demi-espaces fermés dans son enveloppe affine.
+      Un \defterme{polytope convexe} est un convexe non vide qui est intersection finie de demi-espaces fermés dans son enveloppe affine.\\
+      Les $0$-faces et $1$-faces d'un polytope sont respectivement appelés \defterme{sommets} et \defterme{arêtes}.
     \stopdefinition
-
-
-    \startremarque
-      Un polytope convexe ne peut pas être vide.
-    \stopremarque
 
 
     \startdiscussion
@@ -294,16 +299,38 @@
     \stopdefinition
 
 
-    \startdefinition
-      Un \defterme{complexe} est alors un ensemble localement fini $\Delta$ de cellules tel que :
+    \startdiscussion
+      DISCUTER UN PEU\\ % TODO
+    \stopdiscussion
 
+
+    \startlemme
+      Si $K$ est une cellule, alors tout point d'une $k$-face de $K$ appartient à l'enveloppe convexe de $k+1$ points extrémaux de $K$.
+    \stoplemme
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \starttheoreme
+      Les cellules sont exactement les polytopes bornés.
+    \stoptheoreme
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \startdefinition
+      Un \defterme{complexe} est un ensemble localement fini $\Delta$ de cellules tel que :
       \startlisteRom[compact]
         \startitem
-          si $D_1$ et $D_2$ sont deux cellules distinctes de $\Delta$ alors $\interieur{D_1}$ et $\interieur{D_2}$ sont disjoints;
+          si $K_1$ et $K_2$ sont deux cellules distinctes de $\Delta$ alors $\interieur{K_1}$ et $\interieur{K_2}$ sont disjoints;
         \stopitem
 
         \startitem
-          si $D \in \Delta$, alors $\frontiere{D}$ est réunion de cellules de $\Delta$.
+          si $K \in \Delta$, alors $\frontiere{K}$ est réunion de cellules de $\Delta$.
         \stopitem
       \stoplisteRom
       Un \defterme{sous-complexe} de $\Delta$ est un complexe $\Sigma \subseteq \Delta$.
@@ -447,19 +474,6 @@
     \stopdiscussion
   \stopsection
 
-
-
-  %%%
-  \startsection[title={Triangulation des variétés}]
-
-    \bi
-
-    \startlisteAlph
-      \startitem oui \stopitem
-      \startitem non \stopitem
-    \stoplisteAlph
-
-  \stopsection
 
 \stopchapter
 
