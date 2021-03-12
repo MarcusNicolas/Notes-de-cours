@@ -2,6 +2,8 @@
 
   % Couleurs
 
+  
+
   \usecolors[crayola]
 
   \definecolor[CouleurTraits][black]
@@ -15,6 +17,8 @@
 
 
   % Layout
+
+  \setupbodyfont[xits,12pt]
 
   \mainlanguage[fr]
   \language[fr]
@@ -34,7 +38,6 @@
 
   \setupwhitespace[big]
 
-  %\setupbodyfont[schola,10pt]
 
   % Titres de section
 
@@ -55,56 +58,76 @@
 
   % Listes structurées
 
+  
+
+
+  \defineconversion[puces][---,---]
+  
+  \setupitemize[each][puces]
+
+  \setupitemize[
+    leftmargin=1.5em,
+    width=2em,
+    stopper=]
+
+
   \define\sansItalique{%
     \doif{\fontalternative}{it}{\tf}%
     \doif{\fontalternative}{bi}{\bf}%
   }
 
-  \defineconversion[rParCONV][\sansItalique(\romannumerals]
+
   
-  \setupitemize[leftmargin=1.5em]
+  \def\traiterArgsListe[#1]{%
+    \doifinset{compact}{#1}{%
+      \setupitemize[joinedup]]%
+    }%
+  }
 
-  \setupitemize[1][n]
-  \setupitemize[2][a][stopper={)}]
+  \define\startlisteEnum
+    {\dosingleempty\dostartlisteEnum}
+  \define\startlisteNum
+    {\dosingleempty\dostartlisteNum}
+  \define\startlisteAlph
+    {\dosingleempty\dostartlisteAlph}
+  \define\startlisteRom
+    {\dosingleempty\dostartlisteRom}
 
 
-  %ds
-
-
-  \define\startlisteOrd
-    {\dodoubleempty\dostartlisteOrd}
-
-  \def\dostartlisteOrd[#1][#2]{%
+  \def\dostartlisteEnum[#1]{%
     \begingroup%
-    %
-    \def\LISTEORDnum{}
-    \doifundefined{LISTEORDstyle}
-      {\def\LISTEORDstyle{aere}}%
-    %
-    \getparameters[LISTEORD][#1]%
-    %
-    \processaction[\LISTEORDstyle][
-      compact=>{\setupitemize[
-        inbetween={\blank[quarterline]},
-        before={\blank[quarterline]},
-        after={\blank[quarterline]}]},
+    \traiterArgsListe[#1]%
+    \startitemize[puces]%
+  }
 
-      aere=>{\setupitemize[
-        inbetween={\blank[line]},
-        before={\blank[line]},
-        after={\blank[line]}]}
-    ]%
-    %
-    \doifinset{fin}{#2}
-      {\setupitemize[after=]}%
-    %
-    \doifinsetelse{r}{#2}
-      {\startitemize[rParCONV][stopper={)}, width=2em]}
-      {\startitemize}%
-    }
+  \def\dostartlisteNum[#1]{%
+    \begingroup%
+    \traiterArgsListe[#1]%
+    \startitemize[n][left=(, right=)]%
+  }
 
-  \define\stoplisteOrd
+  \def\dostartlisteAlph[#1]{%
+    \begingroup%
+    \traiterArgsListe[#1]%
+    \startitemize[a][left=(, right=)]%
+  }
+
+  \def\dostartlisteRom[#1]{%
+    \begingroup%
+    \traiterArgsListe[#1]%
+    \startitemize[r][left=(, right=)]%
+  }
+
+
+  \define\stoplisteEnum
     {\stopitemize\endgroup}
+  \define\stoplisteNum
+    {\stopitemize\endgroup}
+  \define\stoplisteAlph
+    {\stopitemize\endgroup}
+  \define\stoplisteRom
+    {\stopitemize\endgroup}
+
 
   %%%%%%%%%%%%%%%%%%
 
@@ -127,10 +150,10 @@
       bodyfont=small]
     \startdemCORPS
     \starttextrule{Démonstration}
-    \blank[halfline,samepage]}
+    \page[no]\blank[halfline,samepage]}
 
   \define\stopdem{
-    \blank[halfline,samepage]
+    \blank[halfline,samepage]\page[no]
     \stoptextrule
     \stopdemCORPS
     \endgroup
@@ -242,6 +265,22 @@
   \define\stopdefinition{
     \stoplisereGauche
     \stopdefinitionENUM}
+
+
+  % Style = remarque
+  
+  \defineenumeration[remarque][
+    text={Remarque}]
+
+
+  % Assertion
+  
+  \defineenumeration[assertion][
+    counter=assertion,
+    text={Assertion},
+    prefix=no]
+
+  \setupcounter[assertion][way=bythm]
   
 
   % Discussion
@@ -253,16 +292,25 @@
     titlestyle=\it,
     titleleft=,
     titleright={.\enspace---}]
-    
+  
+  \setupenumeration[subdiscussionENUM][
+    way=bythm,
+    prefixsegments=chapter:*]
 
   \define\startdiscussion
     {\dosingleempty\dostartdiscussion}
+  \define\startsousdiscussion
+    {\dosingleempty\dostartsousdiscussion}
 
   \def\dostartdiscussion[#1]{
     \startdiscussionENUM[title=#1]}
+  \def\dostartsousdiscussion[#1]{
+    \startsubdiscussionENUM[title=#1]}
     
   \define\stopdiscussion{
     \stopdiscussionENUM}
+  \define\stopsousdiscussion{
+    \stopsubdiscussionENUM}
 
 
 \stopenvironment

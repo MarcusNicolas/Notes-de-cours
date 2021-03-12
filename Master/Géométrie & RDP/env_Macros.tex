@@ -1,16 +1,23 @@
 \startenvironment env_macros
 
+  
+  \definemathcommand[interieur][nolop]{\mfunction{int}}
 
-  \definemathcommand[enveloppeAffine][nolop]{\mfunction{aff}}
-  \definemathcommand[enveloppeConvexe][nolop]{\mfunction{conv}}
+  \definemathcommand[aff][nolop]{\text{aff}}
+  \definemathcommand[conv][nolop]{\mfunction{conv}}
 
-  \definemathcommand[faces][nolop]{\facesExp^*}
-  \definemathcommand[facesExp][nolop]{\begingroup\cal{}F\endgroup}
-  \definemathcommand[facesMax][nolop]{\overbar{\facesExp}}
+  \definemathcommand[faces][nolop]{\cal{}F}
+  \definemathcommand[facesExp][nolop]{\faces_{\mfunction{exp}}}
+  \definemathcommand[facesMax][nolop]{\overline{\faces}}
+
+  \definemathcommand[ptExt][nolop]{\mfunction{ext}}
+
 
   \define\frontiere{\partial}
-  \define[2]\produitScalaire{\langle\, #1, #2 \,\rangle}
+  \define[2]\prodScal{\langle #1, #2 \rangle}
+
 
   \define[1]\realisation{\abs{#1}}
+  \define[1]\cellule{\[\,#1\,\]}
 
 \stopenvironment

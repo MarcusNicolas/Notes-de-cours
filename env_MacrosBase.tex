@@ -1,23 +1,20 @@
 % Macros mathématiques de base
 \startenvironment env_MacrosBase
 
-  % Polices
-
-  % TODO : redéfinir \cal
-
+  % TODO : changer la police de \cal
 
   % Écriture de preuves
 
 
   \define[2]\demEquivalence{
-    \starttabulate[|cmw(1cm)|p|]
+    \starttabulate[ |cmw(1cm)|p| ]
     \NC \p{\Rightarrow} \NC #1 \NC \NR
     \TB[halfline]
     \NC \p{\Leftarrow}  \NC #2 \NC \NR
     \stoptabulate}
 
   \define[2]\demDoubleInclusion{
-    \starttabulate[|cmw(1cm)|p|]
+    \starttabulate[ |cmw(1cm)|p| ]
     \NC \p{\subseteq} \NC #1 \NC \NR
     \TB[halfline]
     \NC \p{\supseteq}  \NC #2 \NC \NR
@@ -33,6 +30,8 @@
 
 
   % MACROS A TRIER
+  
+  \definemathcommand[parties][nolop]{\mathfrak{P}}
 
 
   \define\p
@@ -55,7 +54,7 @@
     {\mathopen{}\left\{#1\right\}\mathclose{}}
   
   \define[2]\comprehension
-    {\classe{\;#1\;\middle|\;#2\;}}
+    {\classe{\:#1\;\,\middle|\,\;#2\:}}
 
 
   \define[2]\famille{\p{#1}_{#2}}

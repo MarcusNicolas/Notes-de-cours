@@ -1,199 +1,466 @@
 \startcomponent c_GéométrieConvexe
 \product prd_GéométrieRDP
 
-  \startchapter[title={Un peu de géométrie convexe}]
+\startchapter[title={Un peu de géométrie convexe}]
+
+  %%%
+  \startsection[title={Ensembles convexes}]
+
+    \startdiscussion[Convexité]
+      On rappelle, étant donné un espace affine $A$ sur $\reels$, qu'une partie $C \subseteq A$ est dite \defterme{convexe} lorsque le segment $\segment{x}{y}$ est contenu dans $C$ pour tout couple $\p{x, y}$ de points de $C$. La \defterme{dimension} de $C$, notée $\dim{C}$, est alors la dimension de son enveloppe affine $\aff{C}$. L'intérieur et la frontière de $C$ sont toujours considérés relativement à l'espace topologique $\aff{C}$.
+    \stopdiscussion
 
 
-    \startsection[title={Ensembles convexes}]
-
-      \startdiscussion
-        On rappelle, étant donné un espace affine $A$ sur $\reels$, qu'une partie $C \subseteq A$ est dite \defterme{convexe} lorsque le segment $\segment{x}{y}$ est contenu dans $C$ pour tout couple $\p{x, y}$ de points de $C$.
-      \stopdiscussion
+    \startremarque
+      Un convexe non vide est d'intérieur non vide.
+    \stopremarque
 
 
-      \starttheoreme[Carathéodory]
-        Tout point de l'enveloppe convexe d'une partie $A$ de $\reels^d$ est dans l'enveloppe convexe de $d+1$ points de $A$.
-      \stoptheoreme
+    \starttheoreme[Carathéodory]
+      Tout point de l'enveloppe convexe d'une partie $A$ d'un espace affine de dimension $d$ est barycentre de $d+1$ points de $A$.
+    \stoptheoreme
 
 
-      \startdem
-        Étant donné $y \in \enveloppeConvexe{A}$, il existe un entier $r$ minimal, des réels positifs $\lambda_i$ et des points $x_i$ de $A$ vérifiant :
-        \startformula
-          y = \sum_{i=0}^r \lambda_i x_i
-          \quad\text{et}\quad
-          \sum_{i=0}^r \lambda_i = 1
-        \stopformula
-        Si $r \geq d+1$, alors la famille $x_0, \dots, x_r$ n'est pas affinement indépendante. Autrement dit, il existe des réels $\mu_0, \dots, \mu_r$ non tous nuls tels que :
-        \startformula
-          \sum_{i=0}^r \mu_i x_i = 0
-          \quad\text{et}\quad
-          \sum_{i=0}^r \mu_i = 0
-        \stopformula
-        On peut supposer avoir $\mu_r > 0$ et $\lambda_r / \mu_r < \lambda_i / \mu_i$ pour tout $i$ tel que $\mu_i > 0$. Alors :
-        \startformula
-          x_j = -\sum_{i=0}^{r-1} \frac{\mu_i}{\mu_r} x_i
-          \quad\text{puis}\quad
-          y = \sum_{i=0}^{r-1}
-            \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} x_i
-        \stopformula
-        et on vérifie immédiatement que :
-        \startformula
-          \sum_{i=0}^{r-1} \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} = 1
-          \qquad\text{et}\qquad
-          \pourTout{i < r} \lambda_i - \frac{\lambda_r}{\mu_r} \mu_i \geq 0
-        \stopformula
-        C'est absurde car $r$ est supposé minimal, donc $r \leq d$.
-      \stopdem
+    \startdem
+      Étant donné $y \in \conv{A}$, il existe un entier $r$ minimal, des réels positifs $\lambda_i$ et des points $x_i$ de $A$ vérifiant :
+      \startformula
+        y = \sum_{i=0}^r \lambda_i x_i
+        \quad\text{et}\quad
+        \sum_{i=0}^r \lambda_i = 1
+      \stopformula
+      Si $r \geq d+1$, alors la famille $x_0, \dots, x_r$ n'est pas affinement indépendante. Autrement dit, il existe des réels $\mu_0, \dots, \mu_r$ non tous nuls tels que :
+      \startformula
+        \sum_{i=0}^r \mu_i x_i = 0
+        \quad\text{et}\quad
+        \sum_{i=0}^r \mu_i = 0
+      \stopformula
+      On peut supposer avoir $\mu_r > 0$ et $\lambda_r / \mu_r < \lambda_i / \mu_i$ pour tout $i$ tel que $\mu_i > 0$. Alors :
+      \startformula
+        x_j = -\sum_{i=0}^{r-1} \frac{\mu_i}{\mu_r} x_i
+        \quad\text{puis}\quad
+        y = \sum_{i=0}^{r-1}
+          \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} x_i
+      \stopformula
+      et on vérifie immédiatement que :
+      \startformula
+        \sum_{i=0}^{r-1} \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} = 1
+        \qquad\text{et}\qquad
+        \pourTout{i < r} \lambda_i - \frac{\lambda_r}{\mu_r} \mu_i \geq 0
+      \stopformula
+      C'est absurde car $r$ est supposé minimal, donc $r \leq d$.
+    \stopdem
 
 
-      \startdefinition
-        Soit $K$ une partie convexe fermée de $\reels^d$ de dimension $d$. Une \defterme{face exposée} de $K$ est une partie de $K$ vide ou de la forme $H \cap K$ avec $H$ hyperplan d'appui de $K$.
-        \blank[halfline]
-        L'ensemble des faces exposées de $K$ est noté $\facesExp\p{K}$.
-      \stopdefinition
+    On travaille implicitement dans le reste de chapitre dans un espace affine euclidien ambiant $E$.
 
-
-      \startproposition
-        Soit $K$ un convexe fermé de dimension $d$.
-        \startlisteOrd[style=compact][fin]
-          \startitem
-            Les éléments de $\facesExp\p{K}$ sont des parties convexes fermées de $\frontiere{K}$.
-          \stopitem
-          \startitem
-            L'ensemble $\facesExp\p{K}$ est stable par intersections finies.
-          \stopitem
-        \stoplisteOrd
-      \stopproposition
-
-      \startdem
-        \startlisteOrd
-          \startitem
-            Clair.
-          \stopitem
-
-          \startitem
-            Soient $F_1, \dots, F_m \in \facesExp\p{K}$. On note :
-            \startformula
-              F = \bigcap_{i=1}^m F_i
-            \stopformula
-            Si $F$ est vide alors il n'y a rien à faire. Sinon, quitte à translater $K$, on peut supposer que $0 \in F$. Il existe alors pour tout $i$ un vecteur non nul $u_i$ tel que, si $H_i$ désigne l'hyperplan d'équation $\produitScalaire{x}{u_i} = 0$ :
-            \startformula
-              F_i = H_i \cap K
-              \quad\text{et}\quad
-              \pourTout{x \in K} \produitScalaire{x}{u_i} \leq 0
-            \stopformula
-            Alors, si $u = \sum u_i$ (MONTRER QUE $u \neq 0$) et si $H$ désigne l'hyperplan d'équation $\produitScalaire{x}{u} \leq 0$ :
-            \startformula
-              F = H \cap K
-              \quad\text{et}\quad
-              \pourTout{x \in K} \produitScalaire{x}{u} \leq 0
-            \stopformula
-            Finalement, $H$ est un hyperplan d'appui de $K$ en $0$ et $F \in \facesExp\p{K}$.
-          \stopitem
-        \stoplisteOrd
-      \stopdem
-
-    \stopsection
-
-
-
-    \startsection[title={Polytopes}]
+    \startdefinition
+      Soit $K$ un convexe fermé. Une \defterme{face exposée} de $K$ est une partie de $K$ vide ou de la forme $H \cap K$ avec $H$ hyperplan d'appui de $K$ dans $\aff{K}$.
       
-    \stopsection
+      L'ensemble des faces exposées de $K$ est noté $\facesExp\p{K}$.\\
+      Ses éléments maximaux pour la relation d'inclusion forment l'ensemble $\facesMax\p{K}$.
+    \stopdefinition
 
 
-    \startsection[title={Cellulations}]
+    \startproposition
+      Étant donné un convexe fermé $K$:
+      \startlisteNum[compact]
+        \startitem
+          Les éléments de $\facesExp\p{K}$ sont des parties convexes fermées de $\frontiere{K}$.
+        \stopitem
+        \startitem
+          L'ensemble $\facesExp\p{K}$ est stable par intersections finies.
+        \stopitem
+      \stoplisteNum
+    \stopproposition
 
-    \stopsection
+    \startdem
+      \startlisteNum
+        \startitem
+          Clair.
+        \stopitem
+
+        \startitem
+          Soient $F_1, \dots, F_m \in \facesExp\p{K}$. On note :
+          \startformula
+            F = \bigcap_{i=1}^m F_i
+          \stopformula
+          Si $F$ est vide alors il n'y a rien à faire. Sinon on fixe $a \in F$. Il existe alors pour tout $i$ un vecteur non nul $u_i$ tel que, si $H_i$ désigne l'hyperplan d'équation $\prodScal{x-a}{u_i} = 0$ :
+          \startformula
+            F_i = H_i \cap K
+            \quad\text{et}\quad
+            \pourTout{x \in K} \prodScal{x-a}{u_i} \leq 0
+          \stopformula
+          Le vecteur $u = \sum_i u_i$ est non nul, car si $b \in \interieur{K}$ alors $\prodScal{b-a}{u} < 0$.\\
+          Finalement, si $H$ désigne l'hyperplan d'équation $\prodScal{x}{u} = 0$:
+          \startformula
+            F = H \cap K
+            \quad\text{et}\quad
+            \pourTout{x \in K} \prodScal{x}{u} \leq 0
+          \stopformula
+          et $H$ est un hyperplan d'appui de $K$ en $a$, d'où $F \in \facesExp\p{K}$.
+        \stopitem
+      \stoplisteNum
+    \stopdem
+
+
+    On fixe dans la suite un convexe fermé $K$.
+
+    \startlemme
+      Si $F \subseteq F'$ sont deux faces exposées de $K$ de même dimension, alors $F = F'$.
+    \stoplemme
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \startproposition
+      Si $K$ n'est pas réduit à un point, alors :
+      \startformula
+        \frontiere{K} = \bigcup \facesMax\p{K}
+      \stopformula
+    \stopproposition
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \startdefinition
+      Une \defterme{face} de $K$ est une partie $F$ de $K$ telle qu'il existe une suite de convexes fermés :
+      \startformula
+        K = F_0 \supseteq \dots \supseteq F_k = F
+      \stopformula
+      telle que $F_i \in \facesExp\p{F_{i-1}}$ pour $1 \leq i \leq k$.
+
+      On désigne par $\faces\p{K}$ l'ensemble des faces de $K$.
+    \stopdefinition
+
+
+    \startremarque
+      L'ensemble des faces propres maximales de $K$ est exactement $\facesMax\p{K}$.
+    \stopremarque
+
+
+    \startcorollaire
+      Si $F$ est une face de $K$, alors $\faces\p{F} = \faces\p{K} \cap \parties\p{F}$.
+    \stopcorollaire
+
+
+    \startproposition
+      Si $F$ est une face de $K$, alors $\ptExt{F} = F \cap \ptExt{K}$.
+    \stopproposition
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \startcorollaire
+      Les points extrémaux de $K$ sont exactement les faces singletons.
+    \stopcorollaire
+
+    \startdem
+      % TODO
+    \stopdem
 
 
 
-    \startsection[title={Simplexes et complexes simpliciaux}]
-      \startdefinition
-        Un \defterme{simplexe} est une cellule dont les points extrémaux sont affinement indépendants.
-      \stopdefinition
+  \stopsection
 
-      METTRE LA REMARQUE
 
-      \startdefinition
-        Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que :
-        \startlisteOrd[style=compact][r]
-          \startitem
-            chaque face d'un simplexe de $\Delta$ est dans $\Delta$;
-          \stopitem
+  %%%
+  \startsection[title={Polytopes convexes}]
 
-          \startitem
-            l'intersection de deux simplexes de $\Delta$ est une face commune aux deux.
-          \stopitem
-        \stoplisteOrd
-        Un \defterme{sous-complexe} de $\Delta$ est un complexe simplicial $\Sigma \subseteq \Delta$.
-      \stopdefinition
+    \startdefinition
+      Un \defterme{polytope convexe} est un convexe qui est intersection finie de demi-espaces fermés dans son enveloppe affine.
+    \stopdefinition
 
-      METTRE L'EXEMPLE
 
-      \startdefinition
-        Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique :
+    \startremarque
+      Un polytope convexe ne peut pas être vide.
+    \stopremarque
+
+
+    \startdiscussion
+      Étant donné un polytope convexe $K$, on fixe une famille minimale de demi-espaces fermés $D_1, \dots, D_r$ de $\aff{K}$ vérifiant :
+      \startformula
+        K = \bigcap_{i=1}^r D_i
+      \stopformula
+      et on écrit :
+      \startformula
+        D_i = \comprehension{x}{\prodScal{x-a}{u_i} \leq \theta_i}
+        \quad\text{et}\quad
+        F_i = \frontiere{D_i} \cap K
+      \stopformula
+      pour tout $1 \leq i \leq r$.
+
+
+      \startsousdiscussion
+        Finalement :
         \startformula
-          \realisation{\Delta} = \bigcup \Delta
+          \frontiere{K} = \bigcup_{i=1}^r F_i
         \stopformula
-        Une \defterme{triangulation} d'un espace topologique $X$ est alors la donnée d'un complexe simplicial $\Delta$ et d'un homéomorphisme $X \iso \realisation{\Delta}$.
-      \stopdefinition
-
-      \startdefinition
-        Soit $\Delta$ un complexe simplicial.\\
-        Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que :
-        \startformula
-          \realisation{\Sigma} = \realisation{\Delta}
-        \stopformula
-        et dont chaque simplexe est inclus dans un simplexe de $\Delta$.
-      \stopdefinition
+      \stopsousdiscussion
 
 
-      \starttheoreme
-        Deux complexes simpliciaux qui réalisent le même polyèdre (A DEFINIR) possèdent une subdivision commune.
-      \stoptheoreme
+      \startsousdiscussion
+        ALORS $\facesMax\p{K} = \classe{F_1, \dots, F_r}$.
+      \stopsousdiscussion
+
+
+      \startsousdiscussion
+        Finalement, étant donné un indice $1 \leq i \leq r$, tout élément de $\facesMax\p{F_i}$ est intersection de deux éléments de $\facesMax\p{K}$.
+      \stopsousdiscussion
+    \stopdiscussion
+
+
+    \startproposition
+      Une face propre de $K$ est intersection finie d'éléments de $\facesMax\p{K}$.
+    \stopproposition
+
+    \startdem
+      On raisonne par récurrence sur la dimension $d$ de $K$:
+      \startlisteEnum
+        \startitem
+          si $K$ est réduit à un point, alors l'énoncé est vide.
+        \stopitem
+
+        \startitem
+          % TODO
+          si $d \geq 1$, ALORS
+        \stopitem
+      \stoplisteEnum
+    \stopdem
+
+
+    On déduit immédiatement de ce qui précède :
+
+    \starttheoreme
+      Si $K$ est un polytope convexe, alors les faces exposées de $K$ sont exactement ses faces propres et sont en nombre fini.
+    \stoptheoreme
+
+
+
+    \startdiscussion
+      DIGRESSION, ORGANISER LES PROPS SUIVANTES
+    \stopdiscussion
+
+
+    \startproposition
+      Soit $K$ un polytope convexe.\\
+      Si $D_1, \dots, D_r$ sont des demi-espaces fermés de l'espace $E$ ambiant tels que :
+      \startformula
+        K = \bigcap_{i=1}^r D_i
+      \stopformula
+      En notant $F_i = \frontiere{D_i} \cap K$ pour tout $1 \leq i \leq r$, les faces de $K$ sont alors exactement les intersections dans $K$ d'un nombre fini de $F_i$.
+    \stopproposition
+
+    \startdem
+      % TODO
+    \stopdem
+
+
+    \startcorollaire
+      Si $K_1$ et $K_2$ sont deux polytopes convexes, alors :
+      \startformula
+        \faces\p{K_1 \cap K_2} = \comprehension{F_1 \cap F_2}{\p{F_1, F_2} \in \faces\p{K_1} \times \faces\p{K_2}}
+      \stopformula
+    \stopcorollaire
+
+    \startdem
+      On peut écrire dans $E$ :
+      \startformula
+        K_1 = \bigcap_{i=1}^r D_i
+        \quad\text{et}\quad
+        K_2 = \bigcap_{i=r+1}^{r+s} D_i
+      \stopformula
+      où les $D_i$ sont des demi-espaces fermés. Alors :
+      \startformula
+        K_1 \cap K_2 = \bigcap_{i=1}^{r+s} D_i
+      \stopformula
+      et la (PROP PRECEDENTE) permet de conclure.
+    \stopdem
+
+
+  \stopsection
+
+
+  %%%
+  \startsection[title={Cellules linéaires}]
+
+    \startdefinition
+      Une \defterme{cellule linéaire} est l'enveloppe convexe d'un nombre fini de points.
+    \stopdefinition
+
+
+    \startdefinition
+      Un \defterme{complexe} est alors un ensemble localement fini $\Delta$ de cellules tel que :
+
+      \startlisteRom[compact]
+        \startitem
+          si $D_1$ et $D_2$ sont deux cellules distinctes de $\Delta$ alors $\interieur{D_1}$ et $\interieur{D_2}$ sont disjoints;
+        \stopitem
+
+        \startitem
+          si $D \in \Delta$, alors $\frontiere{D}$ est réunion de cellules de $\Delta$.
+        \stopitem
+      \stoplisteRom
+      Un \defterme{sous-complexe} de $\Delta$ est un complexe $\Sigma \subseteq \Delta$.
+    \stopdefinition
+
+
+  \stopsection
+
+
+  %%%
+  \startsection[title={Simplexes et complexes simpliciaux}]
+    \startdefinition
+      Un \defterme{simplexe} est une cellule dont les points extrémaux sont affinement indépendants.
+    \stopdefinition
+
+    METTRE LA REMARQUE
+
+    \startdefinition
+      Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que :
+      \startlisteRom[compact]
+        \startitem
+          chaque face d'un simplexe de $\Delta$ est dans $\Delta$;
+        \stopitem
+
+        \startitem
+          l'intersection de deux simplexes de $\Delta$ est une face commune aux deux.
+        \stopitem
+      \stoplisteRom
+      Un \defterme{sous-complexe} de $\Delta$ est un complexe simplicial $\Sigma \subseteq \Delta$.
+    \stopdefinition
+
+    METTRE L'EXEMPLE
+
+    \startdefinition
+      Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique :
+      \startformula
+        \realisation{\Delta} = \bigcup \Delta
+      \stopformula
+      Une \defterme{triangulation} d'un espace topologique $X$ est alors la donnée d'un complexe simplicial $\Delta$ et d'un homéomorphisme $X \iso \realisation{\Delta}$.
+    \stopdefinition
+
+    \startdefinition
+      Soit $\Delta$ un complexe simplicial.\\
+      Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que :
+      \startformula
+        \realisation{\Sigma} = \realisation{\Delta}
+      \stopformula
+      et dont chaque simplexe est inclus dans un simplexe de $\Delta$.
+    \stopdefinition
+
+
+    \starttheoreme
+      Deux complexes simpliciaux qui réalisent le même polyèdre (A DEFINIR) possèdent une subdivision commune.
+    \stoptheoreme
+
+    \startdem
+      Soient $\Delta_1$ et $\Delta_2$ deux complexes simpliciaux de $\reels^d$ tels que :
+      \startformula
+        \realisation{\Delta_1} = \realisation{\Delta_2}
+      \stopformula
+      On va construire une suite croissante $\famille{\Sigma_k}{k \leq d}$ de complexes vérifiant pour tout $k$ :
+      \startlisteRom[compact]
+        \startitem
+          $\dim{\Sigma_k} \leq k$
+        \stopitem
+
+        \startitem
+          si $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ sont d'intersection $k$-dimensionnelle :
+          \startformula
+            \sigma_1 \cap \sigma_2 = 
+              \bigcup_{
+                \startsubstack
+                  \sigma \in \Sigma_k \NR
+                  \sigma \subseteq \sigma_1 \cap \sigma_2 \NR
+                \stopsubstack
+              } \sigma
+          \stopformula
+        \stopitem
+
+        \startitem
+          $\realisation{\Sigma_k} = \displaystyle \bigcup_{\dim\p{\sigma_1 \cap \sigma_2} \leq k} \p{\sigma_1 \cap \sigma_2}$
+        \stopitem
+      \stoplisteRom
+
+      On pose naturellement :
+      \startformula
+        \Sigma_0 = \comprehension{\sigma_1 \cap \sigma_2}{\dim\p{\sigma_1 \cap \sigma_2} = 0}
+      \stopformula
+      L'ensemble $\Delta_1 \cup \Delta_2$ étant localement fini, c'est également le cas de $\Sigma_0$. Étant constitué de simplexes réduits à des points, il s'agit d'un complexe simplicial.
+
+      Supposons maintenant avoir construit le complexe $\Sigma_{k-1}$.\\
+      Étant donnés des simplexes $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ tels que $\dim\p{\sigma_1 \cap \sigma_2} = k$, on note $b$ l'isobarycentre de la cellule $\sigma_1 \cap \sigma_2$ et :
+      \startformula
+        F\p{\sigma_1, \sigma_2} = \comprehension{\sigma \in \Sigma_{k-1}}{\sigma \subseteq \sigma_1 \cap \sigma_2}
+      \stopformula
+      On commence par remarquer, $\Sigma_{k-1}$ étant localement fini et $\sigma_1 \cap \sigma_2$ compact, que l'ensemble $F\p{\sigma_1, \sigma_2}$ est fini.
+
+
+      \startassertion
+        Chaque simplexe de $F\p{\sigma_1, \sigma_2}$ est contenu dans une face propre de $\sigma_1 \cap \sigma_2$.
+      \stopassertion
 
       \startdem
-        Soient $\Delta_1$ et $\Delta_2$ deux complexes simpliciaux de $\reels^d$ tels que :
+        Soit $\sigma \in F\p{\sigma_1, \sigma_2}$. D'après le (COROLLAIRE 1.14), on a :
         \startformula
-          \realisation{\Delta_1} = \realisation{\Delta_2}
+          \p{\sigma_1 \cap \sigma_2} \cap \realisation{\Sigma_{k-1}} \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}
         \stopformula
-        On va construire une suite croissante $\famille{\Sigma_k}{k \leq d}$ de complexes vérifiant pour tout $k$ :
-        \startlisteOrd[style=compact][r]
-          \startitem
-            $\dim{\Sigma_k} \leq k$
-          \stopitem
-
-          \startitem
-            si $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ sont d'intersection $k$-dimensionnelle :
-            \startformula
-              \sigma_1 \cap \sigma_2 = 
-                \bigcup_{
-                  \startsubstack
-                    \sigma \in \Sigma_k \NR
-                    \sigma \subseteq \sigma_1 \cap \sigma_2 \NR
-                  \stopsubstack
-                } {\sigma}
-            \stopformula
-          \stopitem
-
-          \startitem
-            $\realisation{\Sigma_k} = \displaystyle \bigcup_{\dim\p{\sigma_1 \cap \sigma_2} \leq k} \p{\sigma_1 \cap \sigma_2}$
-          \stopitem
-        \stoplisteOrd
-
-        On pose naturellement :
+        d'où $\sigma \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}$. Si $\lambda$ désigne la mesure de Lebesgue sur $\aff{\sigma}$, alors :
         \startformula
-          \Sigma_0 = \comprehension{\frac{x}{y}}{dz}
+          0 < \lambda\p{\sigma} \leq
+            \sum_{\omega} \lambda\p{\omega \cap \aff{\sigma}}
         \stopformula
+        et il existe une face propre $\omega$ de $\sigma_1 \cap \sigma_2$ telle que $\lambda\p{\omega \cap \aff{\sigma}} > 0$. Par égalité des dimensions :
+        \startformula \startalign
+          \NC \aff{\sigma} \NC= \aff\p{\omega \cap \aff{\sigma}} \NR
+          \NC \NC\subseteq \aff{\omega} \cap \aff{\sigma} \NR
+          \NC \NC\subseteq \aff{\omega} \NR
+        \stopalign \stopformula
+        Finalement $\sigma \subseteq \aff{\omega} \cap \p{\sigma_1 \cap \sigma_2} = \omega$.
       \stopdem
 
 
-      \startdiscussion[Subdivision cristalline]
-        Oui
-      \stopdiscussion
-    \stopsection
+      \startassertion
+        Si $\sigma = \cellule{a_0, \dots, a_r}$ est un simplexe de $F\p{\sigma_1, \sigma_2}$, alors $\tau = \cellule{b, a_0, \dots, a_r}$ est un simplexe inclus dans $\sigma_1 \cap \sigma_2$ et $\tau \cap \realisation{\Sigma_{k-1}} = \sigma$.
+      \stopassertion
 
-  \stopchapter
+      \startdem
+        Étant donné $H$ un hyperplan d'appui de $\sigma_1 \cap \sigma_2$ dans $\aff\p{\sigma_1 \cap \sigma_2}$, on écrit :
+        \startformula
+          H = \comprehension{x}{\prodScal{x}{u} = \theta}
+          \quad\text{et}\quad
+          \pourTout{x \in \p{\sigma_1 \cap \sigma_2}} \prodScal{x}{u} \leq \theta
+        \stopformula
+        avec $u$ un vecteur non nul et $\theta$ un réel. Un argument de dimension montre l'existence d'un sommet de $\sigma_1 \cap \sigma_2$ hors de $H$, d'où $\prodScal{b}{u} < \theta$ et $b \nin H$ (A CORRIGER).
+      \stopdem
+    \stopdem
+
+
+    \startdiscussion[Subdivision cristalline]
+      $\QED$
+    \stopdiscussion
+  \stopsection
+
+
+
+  %%%
+  \startsection[title={Triangulation des variétés}]
+
+    \bi
+
+    \startlisteAlph
+      \startitem oui \stopitem
+      \startitem non \stopitem
+    \stoplisteAlph
+
+  \stopsection
+
+\stopchapter
 
 \stopcomponent
