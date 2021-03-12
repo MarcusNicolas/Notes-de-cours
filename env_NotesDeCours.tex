@@ -61,13 +61,12 @@
   
 
 
-  \defineconversion[puces][---,---]
+  \defineconversion[puces][---\enspace, ---\enspace]
   
-  \setupitemize[each][puces]
+  \setupitemize[each][puces, fit]
 
   \setupitemize[
     leftmargin=1.5em,
-    width=2em,
     stopper=]
 
 
@@ -80,7 +79,10 @@
   
   \def\traiterArgsListe[#1]{%
     \doifinset{compact}{#1}{%
-      \setupitemize[joinedup]]%
+      \setupitemize[nowhite] % joinedup ?
+    }%
+    \doifinset{fin}{#1}{%
+      \setupitemize[after={\blank[quarterline]}]%
     }%
   }
 
@@ -103,19 +105,31 @@
   \def\dostartlisteNum[#1]{%
     \begingroup%
     \traiterArgsListe[#1]%
-    \startitemize[n][left=(, right=)]%
+    \startitemize[n, fit][
+      left=(,
+      right=)\enspace,
+      alignsymbol=yes,
+      itemalign=left]%
   }
 
   \def\dostartlisteAlph[#1]{%
     \begingroup%
     \traiterArgsListe[#1]%
-    \startitemize[a][left=(, right=)]%
+    \startitemize[a, fit][
+      left=(,
+      right=)\enspace,
+      alignsymbol=yes,
+      itemalign=left]%
   }
 
   \def\dostartlisteRom[#1]{%
     \begingroup%
     \traiterArgsListe[#1]%
-    \startitemize[r][left=(, right=)]%
+    \startitemize[r, fit][
+      left=(,
+      right=)\enspace,
+      alignsymbol=yes,
+      itemalign=left]%
   }
 
 
@@ -202,36 +216,35 @@
 
   % Théorème
 
+  \def\commencerThm[#1][#2][#3]{%
+    \csname start#1ENUM\endcsname[title={#2}, reference={#3}]%
+    \page[no]%
+    \startlisereGauche%
+  }
+
+
   \defineenumeration[theoremeENUM]   [text={Théorème}]
   \defineenumeration[propositionENUM][text={Proposition}]
   \defineenumeration[lemmeENUM]      [text={Lemme}]
   \defineenumeration[corollaireENUM] [text={Corollaire}]
 
   \define\starttheoreme
-    {\dosingleempty\dostarttheoreme}
+    {\dodoubleempty\dostarttheoreme}
   \define\startproposition
-    {\dosingleempty\dostartproposition}
+    {\dodoubleempty\dostartproposition}
   \define\startlemme
-    {\dosingleempty\dostartlemme}
+    {\dodoubleempty\dostartlemme}
   \define\startcorollaire
-    {\dosingleempty\dostartcorollaire}
+    {\dodoubleempty\dostartcorollaire}
 
-  \def\dostarttheoreme[#1]{
-      \starttheoremeENUM[title=#1]
-      \page[no]
-      \startlisereGauche}
-  \def\dostartproposition[#1]{
-      \startpropositionENUM[title=#1]
-      \page[no]
-      \startlisereGauche}
-  \def\dostartlemme[#1]{
-      \startlemmeENUM[title=#1]
-      \page[no]
-      \startlisereGauche}
-  \def\dostartcorollaire[#1]{
-      \startcorollaireENUM[title=#1]
-      \page[no]
-      \startlisereGauche}
+  \def\dostarttheoreme[#1][#2]{%
+    \commencerThm[theoreme][#1][thm:#2]}
+  \def\dostartproposition[#1][#2]{%
+    \commencerThm[proposition][#1][prop:#2]}
+  \def\dostartlemme[#1][#2]{%
+    \commencerThm[lemme][#1][lem:#2]}
+  \def\dostartcorollaire[#1][#2]{%
+    \commencerThm[corollaire][#1][cor:#2]}
 
   \define\stoptheoreme{
     \stoplisereGauche
@@ -245,6 +258,25 @@
   \define\stopcorollaire{
     \stoplisereGauche
     \stopcorollaireENUM}
+
+
+  \definereferenceformat
+    [inthm] [text={théorème }]
+  \definereferenceformat
+    [inprop][text={proposition }]
+  \definereferenceformat
+    [inlem] [text={lemme }]
+  \definereferenceformat
+    [incor] [text={corollaire }]
+
+  \def\cref[#1:#2]{%
+    \expandafter\ifx\csname in#1\endcsname\relax
+      \writestatus{warning}{referenceformat in#1 not defined}%
+      \in[#1:#2]%
+    \else
+      \csname in#1\endcsname[#1:#2]%
+    \fi
+  }
 
 
   % Définition
