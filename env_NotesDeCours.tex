@@ -217,7 +217,7 @@
   % Théorème
 
   \def\commencerThm[#1][#2][#3]{%
-    \csname start#1ENUM\endcsname[title={#2}, reference={#3}]%
+    \csname start#1ENUM\endcsname[reference={#2}, title={#3}]%
     \page[no]%
     \startlisereGauche%
   }
@@ -238,13 +238,13 @@
     {\dodoubleempty\dostartcorollaire}
 
   \def\dostarttheoreme[#1][#2]{%
-    \commencerThm[theoreme][#1][thm:#2]}
+    \commencerThm[theoreme][thm:#1][#2]}
   \def\dostartproposition[#1][#2]{%
-    \commencerThm[proposition][#1][prop:#2]}
+    \commencerThm[proposition][prop:#1][#2]}
   \def\dostartlemme[#1][#2]{%
-    \commencerThm[lemme][#1][lem:#2]}
+    \commencerThm[lemme][lem:#1][#2]}
   \def\dostartcorollaire[#1][#2]{%
-    \commencerThm[corollaire][#1][cor:#2]}
+    \commencerThm[corollaire][cor:#1][#2]}
 
   \define\stoptheoreme{
     \stoplisereGauche
@@ -302,7 +302,8 @@
   % Style = remarque
   
   \defineenumeration[remarque][
-    text={Remarque}]
+    text={Remarque},
+    style=\tf]
 
 
   % Assertion

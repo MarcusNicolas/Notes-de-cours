@@ -16,32 +16,32 @@
     \stopremarque
 
 
-    \starttheoreme[Carathéodory]
+    \starttheoreme[caratheodory][Carathéodory]
       Tout point de l'enveloppe convexe d'une partie $A$ d'un espace affine de dimension $d$ est barycentre de $d+1$ points de $A$.
     \stoptheoreme
 
 
     \startdem
-      Étant donné $y \in \conv{A}$, il existe un entier $r$ minimal, des réels positifs $\lambda_i$ et des points $x_i$ de $A$ vérifiant :
+      Étant donné $y \in \conv{A}$, il existe un entier $r$ minimal, des réels positifs $\lambda_i$ et des points $x_i$ de $A$ vérifiant:
       \startformula
         y = \sum_{i=0}^r \lambda_i x_i
         \quad\text{et}\quad
         \sum_{i=0}^r \lambda_i = 1
       \stopformula
-      Si $r \geq d+1$, alors la famille $x_0, \dots, x_r$ n'est pas affinement indépendante. Autrement dit, il existe des réels $\mu_0, \dots, \mu_r$ non tous nuls tels que :
+      Si $r \geq d+1$, alors la famille $x_0, \dots, x_r$ n'est pas affinement indépendante. Autrement dit, il existe des réels $\mu_0, \dots, \mu_r$ non tous nuls tels que:
       \startformula
         \sum_{i=0}^r \mu_i x_i = 0
         \quad\text{et}\quad
         \sum_{i=0}^r \mu_i = 0
       \stopformula
-      On peut supposer avoir $\mu_r > 0$ et $\lambda_r / \mu_r < \lambda_i / \mu_i$ pour tout $i$ tel que $\mu_i > 0$. Alors :
+      On peut supposer avoir $\mu_r > 0$ et $\lambda_r / \mu_r < \lambda_i / \mu_i$ pour tout $i$ tel que $\mu_i > 0$. Alors:
       \startformula
         x_j = -\sum_{i=0}^{r-1} \frac{\mu_i}{\mu_r} x_i
         \quad\text{puis}\quad
         y = \sum_{i=0}^{r-1}
           \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} x_i
       \stopformula
-      et on vérifie immédiatement que :
+      et on vérifie immédiatement que:
       \startformula
         \sum_{i=0}^{r-1} \p{\lambda_i - \frac{\lambda_r}{\mu_r} \mu_i} = 1
         \qquad\text{et}\qquad
@@ -61,6 +61,17 @@
     \stopdefinition
 
 
+    \startdiscussion[Premières propriétés]
+      Si $F = H \cap K$ est face exposée non vide d'un convexe fermé $K$, alors $\aff{F} \subseteq H$ puis $\aff{F} \cap K \subseteq H \cap K = F$. L'inclusion réciproque étant évidente, il vient que:
+      \startformula
+        F = \aff{F} \cap K
+      \stopformula
+      et c'est vrai également dans le cas où $F$ est vide.
+      
+      En particulier, si $F \subseteq F'$ sont deux faces exposées de $K$ de même dimension, alors $F = F'$. Cela assure par exemple que l'ensemble $\facesExp\p{K}$ est inductif.
+    \stopdiscussion
+
+
     \startproposition
       Étant donné un convexe fermé $K$:
       \startlisteNum[fin]
@@ -68,7 +79,7 @@
           Les éléments de $\facesExp\p{K}$ sont des parties convexes fermées de $\frontiere{K}$.
         \stopitem
         \startitem
-          L'ensemble $\facesExp\p{K}$ est stable par intersections finies.
+          L'ensemble $\facesExp\p{K}$ est stable par intersections finies non vides.
         \stopitem
       \stoplisteNum
     \stopproposition
@@ -80,11 +91,11 @@
         \stopitem
 
         \startitem
-          Soient $F_1, \dots, F_m \in \facesExp\p{K}$. On note :
+          Soient $F_1, \dots, F_m \in \facesExp\p{K}$. On note:
           \startformula
             F = \bigcap_{i=1}^m F_i
           \stopformula
-          Si $F$ est vide alors il n'y a rien à faire. Sinon on fixe $a \in F$. Il existe alors pour tout $i$ un vecteur non nul $u_i$ tel que, si $H_i$ désigne l'hyperplan d'équation $\prodScal{x-a}{u_i} = 0$ :
+          Si $F$ est vide alors il n'y a rien à faire. Sinon on fixe $a \in F$. Il existe alors pour tout $i$ un vecteur non nul $u_i$ tel que, si $H_i$ désigne l'hyperplan d'équation $\prodScal{x-a}{u_i} = 0$:
           \startformula
             F_i = H_i \cap K
             \quad\text{et}\quad
@@ -105,34 +116,28 @@
 
     On fixe dans la suite un convexe fermé $K$.
 
-    \startlemme
-      Si $F \subseteq F'$ sont deux faces exposées de $K$ de même dimension, alors $F = F'$.
-    \stoplemme
-
-    \startdem
-      % TODO
-    \stopdem
-
 
     \startproposition
-      Si $K$ n'est pas réduit à un point, alors :
-      \startformula
-        \frontiere{K} = \bigcup \facesMax\p{K}
-      \stopformula
+      Si $K$ n'est pas réduit à un point, alors $\frontiere{K} = \bigcup \facesMax\p{K}$.
     \stopproposition
 
     \startdem
-      % TODO
+      Si $K$ est vide, il n'y a rien à faire. Sinon, le théorème de séparation des convexes assure que tout point de la frontière de $K$ appartient à une face exposée, et le lemme de Zorn permet de conclure.
     \stopdem
 
 
     \startremarque
-      ON VOUDRAIT LA PROP DE TRANSITIVITÉ POUR LES FACES EXPOSEES MAIS C'EST FAUX (mettre un diagramme) % TODO
+      Si $C' \in \facesExp\p{C}$ et $C'' \in \facesExp\p[]{C'}$, on n'a pas nécessairement $C'' \in \facesExp\p{C}$. REGARDER LE CONVEXE SUIVANT DANS $\reels^2$, POINTS EXTREMAUX $\neq$ POINTS EXPOSÉS. % TODO
+      \placefigure{}{
+        \useMPgraphic{mon_graphique}
+      }
     \stopremarque
 
 
+    La remarque précédente justifie la définition suivante :
+
     \startdefinition
-      Une \defterme{face} de $K$ est une partie $F$ de $K$ telle qu'il existe une suite de convexes fermés :
+      Une \defterme{face} de $K$ est une partie $F$ de $K$ telle qu'il existe une suite de convexes fermés:
       \startformula
         K = F_0 \supseteq \dots \supseteq F_k = F
       \stopformula
@@ -146,14 +151,23 @@
       L'ensemble des faces propres maximales de $K$ est exactement $\facesMax\p{K}$.
     \stopremarque
 
-    \startdiscussion[Transitivité]
-      Si $F$ est une face de $K$
-    \stopdiscussion
 
+    \startproposition[Transitivité]
+      Si $F$ est une face de $K$, alors les faces de $F$ sont les faces de $K$ contenues dans $F$.
+    \stopproposition
 
-    \startcorollaire
-      Si $F$ est une face de $K$, alors $\faces\p{F} = \faces\p{K} \cap \parties\p{F}$.
-    \stopcorollaire
+    \startdem
+      Il suffit de traiter le cas où $F$ est une face exposée de $K$.\\
+      Étant donnée une face $F'$ de $K$ contenue dans $F$, on considère une suite $K = F'_0 \supseteq \dots \supseteq F'_k = F'$ telle que $F'_i \in \facesExp\p{F'_{i-1}}$ pour tout $i$. Si $F'_i$ s'écrit $F'_{i-1} \cap H$ avec $H$ hyperplan d'appui $F'_{i-1}$, alors :
+      \startformula
+        F \cap F'_i = \p{F \cap F'_{i-1}} \cap H
+      \stopformula
+      et $H$ est un hyperplan d'appui de $F \cap F'_{i-1}$. Ainsi $F \cap F'_i \in \facesExp\p{F \cap F'_{i-1}}$, et c'est évidemment aussi le cas si $F'_i$ est vide. La suite :
+      \startformula
+        F = F \cap F'_0 \supseteq \dots \supseteq F \cap F'_k = F'
+      \stopformula
+      montre finalement que $F'$ est une face de $F$.
+    \stopdem
 
 
     \startproposition
@@ -161,7 +175,21 @@
     \stopproposition
 
     \startdem
-      % TODO
+      On peut supposer que $F$ est une face exposée non vide, et on écrit dans ce cas $F = H \cap K$ avec $H$ hyperplan d'appui de $K$. Étant donné $a \in \ptExt{F}$, il existe un vecteur $u$ non nul tel que :
+      \startformula
+        H = \comprehension{x}{\prodScal{x-a}{u}=0}
+        \quad\text{et}\quad
+        \pourTout{x \in K} \prodScal{x-a}{u} \leq 0
+      \stopformula
+      Supposons qu'il existe $0 < \lambda < 1$ et deux points distincts $x$ et $y$ de $K$ tels que $a = \lambda x + \p{1-\lambda} y$. Alors:
+      \startformula
+        \lambda \prodScal{x-a}{u} + \p{1-\lambda} \prodScal{y-a}{u} = 0
+      \stopformula
+      ce qui impose que $x$ et $y$ appartiennent à $F$. C'est absurde, d'où:
+      \startformula
+        \ptExt{F} \subseteq F \cap \ptExt{K}
+      \stopformula
+      et l'inclusion réciproque est immédiate.
     \stopdem
 
 
@@ -171,6 +199,7 @@
 
     \startdem
       % TODO
+      Soit $\classe{x}$ une face singleton de $K$.
     \stopdem
 
 
@@ -188,11 +217,11 @@
 
 
     \startdiscussion
-      Étant donné un polytope convexe $K$, on fixe une famille minimale de demi-espaces fermés $D_1, \dots, D_r$ de $\aff{K}$ vérifiant :
+      Étant donné un polytope convexe $K$, on fixe une famille minimale de demi-espaces fermés $D_1, \dots, D_r$ de $\aff{K}$ vérifiant:
       \startformula
         K = \bigcap_{i=1}^r D_i
       \stopformula
-      et on écrit :
+      et on écrit:
       \startformula
         D_i = \comprehension{x}{\prodScal{x-a}{u_i} \leq \theta_i}
         \quad\text{et}\quad
@@ -202,7 +231,7 @@
 
 
       \startsousdiscussion
-        Finalement :
+        Finalement:
         \startformula
           \frontiere{K} = \bigcup_{i=1}^r F_i
         \stopformula
@@ -239,7 +268,7 @@
     \stopdem
 
 
-    On déduit immédiatement de ce qui précède :
+    On déduit immédiatement de ce qui précède:
 
     \starttheoreme
       Si $K$ est un polytope convexe, alors les faces exposées de $K$ sont exactement ses faces propres et sont en nombre fini.
@@ -254,7 +283,7 @@
 
     \startproposition
       Soit $K$ un polytope convexe.\\
-      Si $D_1, \dots, D_r$ sont des demi-espaces fermés de l'espace $E$ ambiant tels que :
+      Si $D_1, \dots, D_r$ sont des demi-espaces fermés de l'espace $E$ ambiant tels que:
       \startformula
         K = \bigcap_{i=1}^r D_i
       \stopformula
@@ -267,20 +296,20 @@
 
 
     \startcorollaire
-      Si $K_1$ et $K_2$ sont deux polytopes convexes, alors :
+      Si $K_1$ et $K_2$ sont deux polytopes convexes, alors:
       \startformula
         \faces\p{K_1 \cap K_2} = \comprehension{F_1 \cap F_2}{\p{F_1, F_2} \in \faces\p{K_1} \times \faces\p{K_2}}
       \stopformula
     \stopcorollaire
 
     \startdem
-      On peut écrire dans $E$ :
+      On peut écrire dans $E$:
       \startformula
         K_1 = \bigcap_{i=1}^r D_i
         \quad\text{et}\quad
         K_2 = \bigcap_{i=r+1}^{r+s} D_i
       \stopformula
-      où les $D_i$ sont des demi-espaces fermés. Alors :
+      où les $D_i$ sont des demi-espaces fermés. Alors:
       \startformula
         K_1 \cap K_2 = \bigcap_{i=1}^{r+s} D_i
       \stopformula
@@ -300,7 +329,7 @@
 
 
     \startdiscussion
-      DISCUTER UN PEU\\ % TODO
+      DISCUTER UN PEU % TODO
     \stopdiscussion
 
 
@@ -313,7 +342,7 @@
     \stopdem
 
 
-    Le résultat suivant est fondamental :
+    Le résultat suivant est fondamental:
 
     \starttheoreme
       Les cellules sont exactement les polytopes bornés.
@@ -325,7 +354,7 @@
 
 
     \startdefinition
-      Un \defterme{complexe} est un ensemble localement fini $\Delta$ de cellules tel que :
+      Un \defterme{complexe} est un ensemble localement fini $\Delta$ de cellules tel que:
       \startlisteRom[compact]
         \startitem
           si $K_1$ et $K_2$ sont deux cellules distinctes de $\Delta$ alors $\interieur{K_1}$ et $\interieur{K_2}$ sont disjoints;
@@ -351,7 +380,7 @@
     METTRE LA REMARQUE
 
     \startdefinition
-      Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que :
+      Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que:
       \startlisteRom[compact]
         \startitem
           chaque face d'un simplexe de $\Delta$ est dans $\Delta$;
@@ -367,7 +396,7 @@
     METTRE L'EXEMPLE
 
     \startdefinition
-      Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique :
+      Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique:
       \startformula
         \realisation{\Delta} = \bigcup \Delta
       \stopformula
@@ -376,7 +405,7 @@
 
     \startdefinition
       Soit $\Delta$ un complexe simplicial.\\
-      Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que :
+      Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que:
       \startformula
         \realisation{\Sigma} = \realisation{\Delta}
       \stopformula
@@ -389,18 +418,18 @@
     \stoptheoreme
 
     \startdem
-      Soient $\Delta_1$ et $\Delta_2$ deux complexes simpliciaux de $\reels^d$ tels que :
+      Soient $\Delta_1$ et $\Delta_2$ deux complexes simpliciaux de $\reels^d$ tels que:
       \startformula
         \realisation{\Delta_1} = \realisation{\Delta_2}
       \stopformula
-      On va construire une suite croissante $\famille{\Sigma_k}{k \leq d}$ de complexes vérifiant pour tout $k$ :
+      On va construire une suite croissante $\famille{\Sigma_k}{k \leq d}$ de complexes vérifiant pour tout $k$:
       \startlisteRom[compact]
         \startitem
           $\dim{\Sigma_k} \leq k$
         \stopitem
 
         \startitem
-          si $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ sont d'intersection $k$-dimensionnelle :
+          si $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ sont d'intersection $k$-dimensionnelle:
           \startformula
             \sigma_1 \cap \sigma_2 = 
               \bigcup_{
@@ -417,14 +446,14 @@
         \stopitem
       \stoplisteRom
 
-      On pose naturellement :
+      On pose naturellement:
       \startformula
         \Sigma_0 = \comprehension{\sigma_1 \cap \sigma_2}{\dim\p{\sigma_1 \cap \sigma_2} = 0}
       \stopformula
       L'ensemble $\Delta_1 \cup \Delta_2$ étant localement fini, c'est également le cas de $\Sigma_0$. Étant constitué de simplexes réduits à des points, il s'agit d'un complexe simplicial.
 
       Supposons maintenant avoir construit le complexe $\Sigma_{k-1}$.\\
-      Étant donnés des simplexes $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ tels que $\dim\p{\sigma_1 \cap \sigma_2} = k$, on note $b$ l'isobarycentre de la cellule $\sigma_1 \cap \sigma_2$ et :
+      Étant donnés des simplexes $\sigma_1 \in \Delta_1$ et $\sigma_2 \in \Delta_2$ tels que $\dim\p{\sigma_1 \cap \sigma_2} = k$, on note $b$ l'isobarycentre de la cellule $\sigma_1 \cap \sigma_2$ et:
       \startformula
         F\p{\sigma_1, \sigma_2} = \comprehension{\sigma \in \Sigma_{k-1}}{\sigma \subseteq \sigma_1 \cap \sigma_2}
       \stopformula
@@ -436,16 +465,16 @@
       \stopassertion
 
       \startdem
-        Soit $\sigma \in F\p{\sigma_1, \sigma_2}$. D'après le (COROLLAIRE 1.14), on a :
+        Soit $\sigma \in F\p{\sigma_1, \sigma_2}$. D'après le (COROLLAIRE 1.14), on a:
         \startformula
           \p{\sigma_1 \cap \sigma_2} \cap \realisation{\Sigma_{k-1}} \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}
         \stopformula
-        d'où $\sigma \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}$. Si $\lambda$ désigne la mesure de Lebesgue sur $\aff{\sigma}$, alors :
+        d'où $\sigma \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}$. Si $\lambda$ désigne la mesure de Lebesgue sur $\aff{\sigma}$, alors:
         \startformula
           0 < \lambda\p{\sigma} \leq
             \sum_{\omega} \lambda\p{\omega \cap \aff{\sigma}}
         \stopformula
-        et il existe une face propre $\omega$ de $\sigma_1 \cap \sigma_2$ telle que $\lambda\p{\omega \cap \aff{\sigma}} > 0$. Par égalité des dimensions :
+        et il existe une face propre $\omega$ de $\sigma_1 \cap \sigma_2$ telle que $\lambda\p{\omega \cap \aff{\sigma}} > 0$. Par égalité des dimensions:
         \startformula \startalign
           \NC \aff{\sigma} \NC= \aff\p{\omega \cap \aff{\sigma}} \NR
           \NC \NC\subseteq \aff{\omega} \cap \aff{\sigma} \NR
@@ -460,7 +489,7 @@
       \stopassertion
 
       \startdem
-        Étant donné $H$ un hyperplan d'appui de $\sigma_1 \cap \sigma_2$ dans $\aff\p{\sigma_1 \cap \sigma_2}$, on écrit :
+        Étant donné $H$ un hyperplan d'appui de $\sigma_1 \cap \sigma_2$ dans $\aff\p{\sigma_1 \cap \sigma_2}$, on écrit:
         \startformula
           H = \comprehension{x}{\prodScal{x}{u} = \theta}
           \quad\text{et}\quad
