@@ -58,6 +58,7 @@
       { "ugly": "\\\\pourTout",   "pretty": "∀" },
       { "ugly": "\\\\ilExiste",   "pretty": "∃" },
       { "ugly": "\\\\sum",        "pretty": "Σ" },
+      { "ugly": "\\\\iso",        "pretty": "≃", "post": "(?!\\w)|$" },
       { "ugly": "\\\\in",         "pretty": "∈", "post": "(?!\\w)|$" },
       { "ugly": "\\\\nin",        "pretty": "∉", "post": "(?!\\w)|$" },
       { "ugly": "\\\\ni",         "pretty": "∋", "post": "(?!\\w)|$" },

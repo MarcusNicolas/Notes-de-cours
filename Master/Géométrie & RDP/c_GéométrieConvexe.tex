@@ -117,7 +117,7 @@
     On fixe dans la suite un convexe fermé $K$.
 
 
-    \startproposition
+    \startproposition[frontiere_reunion_faces]
       Si $K$ n'est pas réduit à un point, alors $\frontiere{K} = \bigcup \facesMax\p{K}$.
     \stopproposition
 
@@ -148,11 +148,11 @@
 
 
     \startremarque
-      L'ensemble des faces propres maximales de $K$ est exactement $\facesMax\p{K}$.
+      La suite vide montre que $K$ est une face de $K$. L'ensemble des faces propres maximales de $K$ est exactement $\facesMax\p{K}$.
     \stopremarque
 
 
-    \startproposition[Transitivité]
+    \startproposition[transitivite_faces][Transitivité]
       Si $F$ est une face de $K$, alors les faces de $F$ sont les faces de $K$ contenues dans $F$.
     \stopproposition
 
@@ -170,7 +170,7 @@
     \stopdem
 
 
-    \startproposition
+    \startproposition[ptExt_faces]
       Si $F$ est une face de $K$, alors $\ptExt{F} = F \cap \ptExt{K}$.
     \stopproposition
 
@@ -193,15 +193,20 @@
     \stopdem
 
 
-    \startcorollaire
+    \startcorollaire[ptExt_faces_singletons]
       Les points extrémaux de $K$ sont exactement les faces singletons.
     \stopcorollaire
 
     \startdem
-      % TODO
-      Soit $\classe{x}$ une face singleton de $K$.
-    \stopdem
+      Si $\classe{x}$ est une face singleton de $K$, la \cref[prop:ptExt_faces] assure que :
+      \startformula \startalign
+        \NC \classe{x} \cap \ptExt{K} \NC = \ptExt{\classe{x}} \NR
+        \NC \NC = \classe{x} \NR
+      \stopalign \stopformula
+      Autrement dit, $x$ est un point extrémal de $K$.
 
+      Réciproquement, considérons $x$ un point extrémal de $K$. Si $K$ est réduit à un point, alors il n'y a rien à faire. Sinon il existe, en vertu de la \cref[prop:frontiere_reunion_faces], une face propre maximale $F$ de $K$ qui contient $x$. Le point $x$ est en particulier extrémal dans $F$ et $\dim{F} < \dim{K}$. En réitérant ce processus, on finit par montrer que $x$ appartient à une face de $K$ de dimension nulle, ce qui achève la preuve.
+    \stopdem
 
 
   \stopsection
@@ -216,21 +221,38 @@
     \stopdefinition
 
 
+    % FIXME : quand j'utilise les résultats de cette discussion, je ne vérifie
+    % pas toujours l'hypothèse sur la dimension (mais si K est un point, tout
+    % est évidemment trivial)
     \startdiscussion
-      Étant donné un polytope convexe $K$, on fixe une famille minimale de demi-espaces fermés $D_1, \dots, D_r$ de $\aff{K}$ vérifiant:
+      Étant donné un polytope convexe $K$ de dimension non nulle, on fixe une famille minimale de demi-espaces fermés $D_1, \dots, D_r$ de $\aff{K}$ vérifiant:
       \startformula
         K = \bigcap_{i=1}^r D_i
       \stopformula
-      et on écrit:
+      En fixant $a \in \interieur{K}$, on peut écrire pour tout $1 \leq i \leq r$:
       \startformula
         D_i = \comprehension{x}{\prodScal{x-a}{u_i} \leq \theta_i}
         \quad\text{et}\quad
         F_i = \frontiere{D_i} \cap K
       \stopformula
-      pour tout $1 \leq i \leq r$.
+      où les $u_i$ sont des vecteurs non nuls et les $\theta_i$ des réels strictement positifs.
 
 
       \startsousdiscussion
+        Étant donné un indice $1 \leq i \leq r$, on pose:
+        \startformula
+          K_i = \bigcap_{j \neq i} D_j
+        \stopformula
+        La minimalité de la famille $D_1, \dots, D_r$ implique $K \subset K_i$.\\
+        Si $b \in K_i - K$, alors $\prodScal{b-a}{u_i} > \theta_i$ et il existe $c \in \intervalle{a}{b} \subseteq K_i$ tel que:
+        \startformula
+          \prodScal{c}{u_i} = \theta_i
+        \stopformula
+        Alors $c \in \frontiere{D_i} \cap K_i = F_i$, et $\frontiere{D_i}$ est un hyperplan d'appui de $K$ en $c$.\\
+        En particulier $F_i$ est une face exposée de $K$, et $F_i \subseteq \frontiere{K}$ d'après la \cref[prop:frontiere_reunion_faces].
+
+        Maintenant, si $x \in K - \bigcup_i F_i$, alors $\prodScal{x-a}{u_i} < \theta_i$ pour $1 \leq i \leq r$ et $K$ est voisinage de $x$. On en déduit $K - \bigcup_i F_i \subseteq \interieur{K}$, d'où $\frontiere{K} = K - \interieur{K} \subseteq \bigcup_i F_i$.
+        
         Finalement:
         \startformula
           \frontiere{K} = \bigcup_{i=1}^r F_i
@@ -239,18 +261,44 @@
 
 
       \startsousdiscussion
-        ALORS $\facesMax\p{K} = \classe{F_1, \dots, F_r}$.
+        Si $F \in \facesExp\p{K}$, alors d'après ce qui précède:
+        \startformula
+          F = F \cap \frontiere{K} = \bigcup_{i=1}^r \p{F \cap F_i}
+        \stopformula
+        Si $\lambda$ désigne la mesure de Lebesgue sur $\aff{K}$, alors :
+        \startformula
+          0 < \lambda\p{F} \leq \sum_{i=1}^r \lambda\p{F \cap F_i}
+        \stopformula
+        et il existe un indice $1 \leq i \leq r$ tel que $\lambda\p{F \cap F_i} > 0$. En particulier $F$ et $F \cap F_i$ sont de même dimension, puis $F \cap F_i = F$. Autrement dit $F \subseteq F_i$, et $\facesMax\p{K} \subseteq \classe{F_1, \dots, F_r}$.
+
+        Réciproquement, supposons qu'il existe deux indices $i$ et $j$ tels que $F_i \subseteq F_j$.\\
+        Si $b \in K_i - K$, alors $\prodScal{b-a}{u_i} > \theta_i$ et il existe $c \in \intervalle{a}{b} \subseteq K_i$ tel que $\prodScal{c-a}{u_i} = \theta_i$. En particulier, $c \in F_i$ et l'hypothèse assure que $\prodScal{c-a}{u_j} = \theta_j$, or $\prodScal{b-a}{u_j} \leq \theta_j$. C'est absurde, donc les $F_i$ sont maximales parmi les faces exposées de $K$.
+
+        Ainsi $\facesMax\p{K} = \classe{F_1, \dots, F_r}$.
       \stopsousdiscussion
 
 
       \startsousdiscussion
-        Finalement, étant donné un indice $1 \leq i \leq r$, tout élément de $\facesMax\p{F_i}$ est intersection de deux éléments de $\facesMax\p{K}$.
+        Pour $1 \leq i \leq r$, on a:
+        \startformula \startalign
+          \NC F_i \NC = \frontiere{D_i} \cap K_i \NR
+          \NC \NC = \bigcap_{i \neq j} \p{\frontiere{D_i} \cap D_j} \NR
+        \stopalign \stopformula
+        or $\frontiere{D_i} \cap D_j$ est soit plein soit un demi-espace fermé dans $\frontiere{D_i}$. En particulier $F_i$ est un polytope convexe, et chaque $F \in \facesMax\p{F_i}$ est d'après ce qui précède de la forme:
+        \startformula \startalign
+          \NC F \NC = \frontiere\p{\frontiere{D_i} \cap D_j} \cap F_i \NR
+          \NC \NC = \frontiere{D_i} \cap \frontiere{D_j} \cap F_i \NR
+          \NC \NC = F_i \cap F_j
+        \stopalign \stopformula
+        pour un certain $j \neq i$ tel que $\frontiere{D_i} \cap D_j \subset \frontiere{D_i}$.
+
+        Ainsi chaque élément de $\facesMax\p{F_i}$ est intersection de deux éléments de $\facesMax\p{K}$.
       \stopsousdiscussion
     \stopdiscussion
 
 
-    \startproposition
-      Une face propre de $K$ est intersection finie d'éléments de $\facesMax\p{K}$.
+    \startproposition[intersections_facesMax_polytope]
+      Une face de $K$ est intersection finie d'éléments de $\facesMax\p{K}$ dans $K$.
     \stopproposition
 
     \startdem
@@ -261,8 +309,7 @@
         \stopitem
 
         \startitem
-          % TODO
-          si $d \geq 1$, ALORS
+          si $d \geq 1$, on se donne une face $F$ de $K$. Si $F = K$, alors l'intersection vide convient. Sinon il existe une face maximale propre $G$ de $K$ contenant $F$. Alors $F$ est une face de $G$ en vertu de la \cref[prop:transitivite_faces], et $F$ est intersection finie dans $G$ d'éléments de $\facesMax\p{G}$ d'après l'hypothèse de récurrence. La discussion qui précède permet de conclure.
         \stopitem
       \stoplisteEnum
     \stopdem
@@ -270,32 +317,42 @@
 
     On déduit immédiatement de ce qui précède:
 
-    \starttheoreme
+    \starttheoreme[faces_polytope]
       Si $K$ est un polytope convexe, alors les faces exposées de $K$ sont exactement ses faces propres et sont en nombre fini.
     \stoptheoreme
 
 
 
     \startdiscussion
-      DIGRESSION, ORGANISER LES PROPS SUIVANTES
+      % TODO : Digression, organiser ce qui vient après
     \stopdiscussion
 
 
-    \startproposition
+    \startproposition[faces_polytope_espaceAmbiant]
       Soit $K$ un polytope convexe.\\
       Si $D_1, \dots, D_r$ sont des demi-espaces fermés de l'espace $E$ ambiant tels que:
       \startformula
         K = \bigcap_{i=1}^r D_i
       \stopformula
-      En notant $F_i = \frontiere{D_i} \cap K$ pour tout $1 \leq i \leq r$, les faces de $K$ sont alors exactement les intersections dans $K$ d'un nombre fini de $F_i$.
+      alors, en notant $F_i = \frontiere{D_i} \cap K$ pour tout $1 \leq i \leq r$, les faces de $K$ sont alors exactement les intersections dans $K$ d'un nombre fini de $F_i$.
     \stopproposition
 
     \startdem
-      % TODO
+      On a:
+      \startformula
+        K = \bigcap_{i=1}^r \p{D_i \cap \aff{K}}
+      \stopformula
+      or $\Delta_i = D_i \cap \aff{K}$ est soit plein soit un demi-espace fermé dans $\aff{K}$ pour tout $i$. Or, pour $1 \leq i \leq r$, on vérifie que :
+      \startformula
+        F_i = \frontiere{\Delta_i} \cap K
+      \stopformula
+      En particulier, les $F_i$ sont des faces exposées (éventuellement vides) de $K$.
+
+      Réciproquement, on extrait de la famille $\Delta_1, \dots, \Delta_r$ une famille minimale délimitant $K$ que l'on suppose, quitte à réarranger les $D_i$, de la forme $\Delta_1, \dots, \Delta_s$. Mais alors $\facesMax\p{K} = \classe{F_1, \dots, F_s}$ et toute face de $K$ est intersection dans $K$ d'un nombre fini de $F_i$ en vertu de la \cref[prop:intersections_facesMax_polytope].
     \stopdem
 
 
-    \startcorollaire
+    \startcorollaire[faces_intersection_polytopes]
       Si $K_1$ et $K_2$ sont deux polytopes convexes, alors:
       \startformula
         \faces\p{K_1 \cap K_2} = \comprehension{F_1 \cap F_2}{\p{F_1, F_2} \in \faces\p{K_1} \times \faces\p{K_2}}
@@ -313,7 +370,7 @@
       \startformula
         K_1 \cap K_2 = \bigcap_{i=1}^{r+s} D_i
       \stopformula
-      et la (PROP PRECEDENTE) permet de conclure.
+      et la \cref[prop:faces_polytope_espaceAmbiant] permet de conclure.
     \stopdem
 
 
@@ -329,16 +386,16 @@
 
 
     \startdiscussion
-      DISCUTER UN PEU % TODO
+      % TODO : discuter un peu
     \stopdiscussion
 
 
-    \startlemme
+    \startlemme[faces_conv_ptExt]
       Si $K$ est une cellule, alors tout point d'une $k$-face de $K$ appartient à l'enveloppe convexe de $k+1$ points extrémaux de $K$.
     \stoplemme
 
     \startdem
-      % TODO
+      Soient $K$ une cellule et $F$ une éventuelle $k$-face de $K$. Le théorème de Krein--Milman et la \cref[prop:ptExt_faces] assurent que $F$ est l'enveloppe convexe des points extrémaux de $K$ qui appartiennent à $F$. Le \cref[thm:caratheodory] appliqué dans l'espace $\aff{F}$ permet de conclure.
     \stopdem
 
 
@@ -349,35 +406,37 @@
     \stoptheoreme
 
     \startdem
-      % TODO
+      % TODO : réorganiser la preuve
+      Soit $K$ une cellule, que l'on suppose sans perte de généralité de dimension $d \geq 1$. L'ensemble $L$ des combinaisons affines d'au plus $d-1$ points extrémaux de $K$ contient d'après le \cref[lem:faces_conv_ptExt] les faces de $K$ de dimension inférieure à $d-2$. Étant donné $b \nin K$, on définit :
+      \startformula
+        C = \comprehension
+          {\lambda x + \p{1-\lambda} b}
+          {\lambda \geq 0 \text{ et } x \in L}
+      \stopformula
+      L'ensemble $C$ est contenu dans un nombre fini d'espaces affines de dimension inférieure à $d-1$, donc est négligeable pour la mesure de Lebesgue dans $\aff{K}$. En particulier, il existe $a \in \p{\interieur{K}} \setminus C$ puis, par compacité de $K$, un $0 < \lambda < 1$ minimal tel que le point $c = \lambda a + \p{1-\lambda} b$ appartienne à $K$. Alors $c \in \frontiere{K}$, et il existe d'après la \cref[prop:frontiere_reunion_faces] une face propre $F$ de $K$ contenant $c$, nécessairement de dimension $d-1$. Si l'hyperplan $\aff{F}$ est d'équation $\prodScal{x-a}{u} = \theta$, alors $b-a$ n'est pas orthogonal à $u$ et $\aff{F}$ sépare $K$ du point $b$. On en déduit que $K$ est l'intersection des demi-espaces fermés déterminés par les $\p{d-1}$-faces de $K$, qui sont en nombre fini d'après le \cref[lem:faces_conv_ptExt].
+
+      Réciproquement, si $K$ est un polytope borné, alors il possède un nombre fini de points extrémaux d'après le \cref[cor:ptExt_faces_singletons] et le \cref[thm:faces_polytope]. Le théorème de Krein--Milman permet de conclure.
     \stopdem
 
 
-    \startdefinition
-      Un \defterme{complexe} est un ensemble localement fini $\Delta$ de cellules tel que:
-      \startlisteRom[compact]
-        \startitem
-          si $K_1$ et $K_2$ sont deux cellules distinctes de $\Delta$ alors $\interieur{K_1}$ et $\interieur{K_2}$ sont disjoints;
-        \stopitem
-
-        \startitem
-          si $K \in \Delta$, alors $\frontiere{K}$ est réunion de cellules de $\Delta$.
-        \stopitem
-      \stoplisteRom
-      Un \defterme{sous-complexe} de $\Delta$ est un complexe $\Sigma \subseteq \Delta$.
-    \stopdefinition
-
+    \startcorollaire[intersection_cellules]
+      L'intersection de deux cellules est encore une cellule.
+    \stopcorollaire
 
   \stopsection
 
 
   %%%
   \startsection[title={Simplexes et complexes simpliciaux}]
+
     \startdefinition
       Un \defterme{simplexe} est une cellule dont les points extrémaux sont affinement indépendants.
     \stopdefinition
 
-    METTRE LA REMARQUE
+    \startremarque
+      Les faces d'un simplexe de points extrémaux $a_0, \dots, a_k$ sont exactement les enveloppes convexes d'une partie des $a_i$. Ce sont en particulier des simplexes de dimension plus petite.
+    \stopremarque
+
 
     \startdefinition
       Un \defterme{complexe simplicial} de $\reels^d$ est un ensemble localement fini $\Delta$ de simplexes tel que:
@@ -393,28 +452,35 @@
       Un \defterme{sous-complexe} de $\Delta$ est un complexe simplicial $\Sigma \subseteq \Delta$.
     \stopdefinition
 
-    METTRE L'EXEMPLE
 
-    \startdefinition
-      Si $\Delta$ est un complexe simplicial, on définit la réalisation géométrique de $\Delta$ comme étant l'espace topologique:
+    \startdiscussion[Squelettes]
+      Étant donné un complexe simplicial $\Delta$ et un entier $n$, le \defterme{$n$-squelette} de $\Delta$ est le sous-complexe $\squelette{\Delta}{n}$ de $\Delta$ défini par:
+      \startformula
+        \squelette{\Delta}{n} = \comprehension{\sigma \in \Delta}{\dim{\sigma} \leq n}
+      \stopformula
+    \stopdiscussion
+
+
+    \startdiscussion[Subdivision d'un complexe]
+      La \defterme{réalisation géométrique} d'un complexe simplicial $\Delta$ est l'espace topologique:
       \startformula
         \realisation{\Delta} = \bigcup \Delta
       \stopformula
-      Une \defterme{triangulation} d'un espace topologique $X$ est alors la donnée d'un complexe simplicial $\Delta$ et d'un homéomorphisme $X \iso \realisation{\Delta}$.
-    \stopdefinition
-
-    \startdefinition
-      Soit $\Delta$ un complexe simplicial.\\
-      Une \defterme{subdivision} de $\Delta$ est un complexe simplicial $\Sigma$ tel que:
+      On dit d'une partie d'un espace affine euclidien que c'est un \defterme{polyèdre} si elle est la réalisation d'un certain complexe. Une subdivision de $\Delta$ est un complexe simplicial $\Sigma$ tel que:
       \startformula
         \realisation{\Sigma} = \realisation{\Delta}
       \stopformula
       et dont chaque simplexe est inclus dans un simplexe de $\Delta$.
+    \stopdiscussion
+
+
+    \startdefinition
+      Une \defterme{triangulation} d'un espace topologique $X$ est la donnée d'un complexe simplicial $\Delta$ et d'un homéomorphisme $X \iso \realisation{\Delta}$.
     \stopdefinition
 
 
     \starttheoreme
-      Deux complexes simpliciaux qui réalisent le même polyèdre (A DEFINIR) possèdent une subdivision commune.
+      Deux complexes simpliciaux qui réalisent le même polyèdre possèdent une subdivision commune.
     \stoptheoreme
 
     \startdem
@@ -457,7 +523,7 @@
       \startformula
         F\p{\sigma_1, \sigma_2} = \comprehension{\sigma \in \Sigma_{k-1}}{\sigma \subseteq \sigma_1 \cap \sigma_2}
       \stopformula
-      On commence par remarquer, $\Sigma_{k-1}$ étant localement fini et $\sigma_1 \cap \sigma_2$ compact, que l'ensemble $F\p{\sigma_1, \sigma_2}$ est fini.
+      L'ensemble $\Sigma_{k-1}$ étant localement fini et $\sigma_1 \cap \sigma_2$ compact, il vient que $F\p{\sigma_1, \sigma_2}$ est fini.
 
 
       \startassertion
@@ -465,7 +531,7 @@
       \stopassertion
 
       \startdem
-        Soit $\sigma \in F\p{\sigma_1, \sigma_2}$. D'après le (COROLLAIRE 1.14), on a:
+        Soit $\sigma \in F\p{\sigma_1, \sigma_2}$. D'après le \cref[cor:faces_intersection_polytopes], on a:
         \startformula
           \p{\sigma_1 \cap \sigma_2} \cap \realisation{\Sigma_{k-1}} \subseteq \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}
         \stopformula
@@ -495,8 +561,125 @@
           \quad\text{et}\quad
           \pourTout{x \in \p{\sigma_1 \cap \sigma_2}} \prodScal{x}{u} \leq \theta
         \stopformula
-        avec $u$ un vecteur non nul et $\theta$ un réel. Un argument de dimension montre l'existence d'un sommet de $\sigma_1 \cap \sigma_2$ hors de $H$, d'où $\prodScal{b}{u} < \theta$ et $b \nin H$ (A CORRIGER).
+        avec $u$ un vecteur non nul et $\theta$ un réel. Un argument de dimension montre l'existence d'un sommet de $\sigma_1 \cap \sigma_2$ hors de $H$, d'où $\prodScal{b}{u} < \theta$ et $b \nin H$. Mais $\sigma \subseteq \sigma_1 \cap \sigma_2$, et si $\tau$ désigne la cellule $\conv{\classe{b} \cup \sigma}$:
+        \startformula
+          \tau \cap H = \sigma \cap H
+        \stopformula
+        En particulier, si $B = \bigcup \facesExp\p{\sigma_1 \cap \sigma_2}$ alors :
+        \startformula
+          \tau \cap B = \sigma \cap B
+        \stopformula
+        Puis, $\tau$ étant inclus dans $\sigma_1 \cap \sigma_2$:
+        \startformula\startalign
+          \NC \tau \cap \realisation{\Sigma_{k-1}} \NC = \sigma \cap \realisation{\Sigma_{k-1}} \NR
+          \NC \NC = \sigma
+        \stopalign\stopformula
+        % TODO : mettre référence
+        Il ne reste plus qu'à vérifier que $\tau$ est un simplexe. L'(ASSERTION 1) montre qu'il existe une face propre $\omega$ de $\sigma_1 \cap \sigma_2$ telle que $\sigma \subseteq \omega$, or $b \nin \aff{\omega}$ d'après ce qui précède. Les points $b, a_0, \dots, a_r$ sont donc affinement indépendants.
       \stopdem
+
+
+      En particulier, l'ensemble:
+      \startformula
+        \Sigma\p{\sigma_1, \sigma_2} = \comprehension{\conv \classe{b} \cup \sigma}{\sigma \in F\p{\sigma_1, \sigma_2}}
+      \stopformula
+      est formé de simplexes contenus dans $\sigma_1 \cap \sigma_2$ de dimension inférieure à $k$.
+
+
+      \startassertion
+        On a:
+        \startformula
+          \sigma_1 \cap \sigma_2 = \bigcup \Sigma\p{\sigma_1, \sigma_2}
+        \stopformula
+      \stopassertion
+
+      \startdem
+        Soit $x \in \p{\sigma_1 \cap \sigma_2} - \classe{b}$.\\
+        Il existe, par compacité de $\sigma_1 \cap \sigma_2$, un réel $\lambda \geq 1$ maximal tel que $y = \lambda x + \p{1-\lambda} b \in \p{\sigma_1 \cap \sigma_2}$.\\
+        Alors $y \in \frontiere\p{\sigma_1 \cap \sigma_2}$, donc $y$ appartient à une face propre $\tau_1 \cap \tau_2$ de $\sigma_1 \cap \sigma_2$. Par hypothèse de récurrence, $y$ appartient à un simplexe $\tau$ de $\Sigma_{k-1}$ contenu dans $\tau_1 \cap \tau_2$. Finalement $\conv{\classe{b} \cup \tau} \in \Sigma\p{\sigma_1, \sigma_2}$ contient $x$.
+      \stopdem
+
+
+      \startassertion
+        Si $\sigma$ est face d'un simplexe de $\Sigma\p{\sigma_1, \sigma_2}$, alors:
+        \startformula
+          \sigma \in \Sigma_{k-1} \cup \Sigma\p{\sigma_1, \sigma_2}
+        \stopformula
+      \stopassertion
+
+      \startdem
+        Soit $\sigma$ face d'un simplexe $\tau$ de $\Sigma\p{\sigma_1, \sigma_2}$. L'ensemble des sommets de $\sigma$ est une partie de l'ensemble $\classe{b, a_0, \dots, a_r}$ des sommets de $\tau$.\\
+        Mais $\cellule{a_0, \dots, a_r} \in \Sigma_{k-1}$, donc il suffit pour conclure de distinguer les cas selon si $b$ est ou non sommet de $\sigma$.
+      \stopdem
+
+
+      On définit alors:
+      \startformula
+        \Sigma_k = \Sigma_{k-1} \cup \bigcup_{\dim\p{\sigma_1 \cap \sigma_2} = k} \Sigma\p{\sigma_1, \sigma_2}
+      \stopformula
+      Soit $U$ un ouvert qui intersecte un nombre fini de simplexes de $\Delta_1 \cup \Delta_2$. Le nombre de couples $\p{\sigma_1, \sigma_2}$ tels que $U$ rencontre au moins un simplexe de $\Sigma\p{\sigma_1, \sigma_2}$ est fini, donc $U$ intersecte un nombre fini de simplexes de $\Sigma_k - \Sigma_{k-1}$. Finalement, l'ensemble $\Sigma_k = \Sigma_{k-1} \cup \p{\Sigma_k - \Sigma_{k-1}}$ est localement fini.
+
+
+      \startassertion
+        Si $\sigma \in \Sigma\p{\sigma_1, \sigma_2}$ et $\tau \in \Sigma\p{\tau_1, \tau_2}$, alors $\sigma \cap \tau \in \Sigma_k$.
+      \stopassertion
+
+      % TODO : rajouter les références
+      \startdem
+        D'après (ASSERTION 2), les ensembles:
+        \startformula
+          \sigma' = \sigma \cap \realisation{\Sigma_{k-1}}
+          \quad\text{et}\quad
+          \tau' = \tau \cap \realisation{\Sigma_{k-1}}
+        \stopformula
+        sont des simplexes de $\Sigma_{k-1}$. On distingue alors deux cas:
+        \startlisteEnum
+          \startitem
+            si $\sigma_1 \cap \sigma_2$ et $\tau_1 \cap \tau_2$ sont une même cellule d'isobarycentre $b$, alors:
+            \startformula
+              \sigma = \conv{\classe{b} \cup \sigma'}
+              \quad\text{et}\quad
+              \tau = \conv{\classe{b} \cup \tau'}
+            \stopformula
+            Soit $a \in \p{\sigma \cap \tau} - \classe{b}$. Quitte à échanger $\sigma$ et $\tau$, on peut écrire:
+            \startformula\startalign
+              \NC a \NC = \lambda b + \p{1-\lambda} y \NR
+              \NC \NC = \mu b + \p{1-\mu} z \NR
+            \stopalign\stopformula
+            avec $0 \leq \lambda \leq \mu < 1$, $y \in \sigma'$ et $z \in \tau'$, et alors:
+            \startformula
+              y = \frac{\mu - \lambda}{1-\lambda} b + \frac{1-\mu}{1-\lambda} z \in \tau
+            \stopformula
+            En particulier $y \in \sigma' \cap \tau = \sigma' \cap \tau'$ et $a \in \conv{\classe{b} \cup \p{\sigma' \cap \tau'}}$.\\
+            On en déduit $\sigma \cap \tau \subseteq \conv{\classe{b} \cup \p{\sigma' \cap \tau'}}$, puis:
+            \startformula
+              \sigma \cap \tau = \conv{\classe{b} \cup \p{\sigma' \cap \tau'}}
+            \stopformula
+            et $\sigma \cap \tau \in \Sigma\p{\sigma_1, \sigma_2}$.
+          \stopitem
+
+          \startitem
+            sinon $\p{\sigma_1 \cap \tau_1} \cap \p{\sigma_2 \cap \tau_2}$ est une face propre des cellules $\sigma_1 \cap \sigma_2$ et $\tau_1 \cap \tau_2$, donc est de dimension inférieure à $k-1$. En particulier:
+            \startformula
+              \sigma \cap \tau \subseteq \p{\sigma_1 \cap \tau_1} \cap \p{\sigma_2 \cap \tau_2} \subseteq \realisation{\Sigma_{k-1}}
+            \stopformula
+            puis:
+            \startformula\startalign
+              \NC \sigma \cap \tau \NC = \p{\sigma \cap \realisation{\Sigma_{k-1}}} \cap \p{\tau \cap \realisation{\Sigma_{k-1}}} \NR
+              \NC \NC = \sigma' \cap \tau' \NR
+            \stopalign\stopformula
+            On en déduit $\sigma \cap \tau \in \Sigma_{k-1}$.
+          \stopitem
+        \stoplisteEnum
+      \stopdem
+
+
+      % TODO : mettre références
+      Les (ASSERTIONS 4 & 5) montrent finalement que l'ensemble localement fini $\Sigma_k$ est un complexe simplicial, et:
+      \startformula
+        \realisation{\Sigma_k} = \bigcup_{\dim\p{\sigma_1 \cap \sigma_2} \leq k} \p{\sigma_1 \cap \sigma_2}
+      \stopformula
+      en vertu de (ASSERTION 3).
     \stopdem
 
 

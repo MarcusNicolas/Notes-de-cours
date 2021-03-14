@@ -208,10 +208,9 @@
     titleleft={---\enspace},
     titleright=,
     after={\blank[5*quarterline]},
+    way=bysection,
     prefixsegments=chapter:section,
     prefix=yes]
-
-  \setupcounter[thm][way=bysection]
 
 
   % Théorème
@@ -299,13 +298,6 @@
     \stopdefinitionENUM}
 
 
-  % Style = remarque
-  
-  \defineenumeration[remarque][
-    text={Remarque},
-    style=\tf]
-
-
   % Assertion
   
   \defineenumeration[assertion][
@@ -314,7 +306,17 @@
     prefix=no]
 
   \setupcounter[assertion][way=bythm]
+
+
+
+  % Style = remarque
+
+  \setupenumeration[style=\tf]
   
+  \defineenumeration[remarque][text={Remarque}]
+  \defineenumeration[exemple][text={Exemple}]
+  
+
 
   % Discussion
 
