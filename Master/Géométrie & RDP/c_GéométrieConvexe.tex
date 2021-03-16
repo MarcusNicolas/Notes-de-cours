@@ -16,6 +16,7 @@
     \stopremarque
 
 
+
     \starttheoreme[caratheodory][Carathéodory]
       Tout point de l'enveloppe convexe d'une partie $A$ d'un espace affine de dimension $d$ est barycentre de $d+1$ points de $A$.
     \stoptheoreme
@@ -377,7 +378,7 @@
   \stopsection
 
 
-  %%%
+  %%% TODO : réorganiser cette section ?
   \startsection[title={Cellules linéaires}]
 
     \startdefinition
@@ -385,8 +386,13 @@
     \stopdefinition
 
 
-    \startdiscussion
-      % TODO : discuter un peu
+    \startdiscussion[Diamètre et corpulence]
+      On appelle \defterme{corpulence} d'une cellule $K = \cellule{a_0, \dots, a_k}$ le rapport:
+      \startformula
+        \corp{K} = \frac{r}{d}
+      \stopformula
+      où $r$ est le rayon maximal d'une boule de $\aff{K}$ contenue dans $K$ et $d = \diam{K}$.\\
+      On remarque que $d$ s'obtient comme le maximum des $\abs{a_i - a_j}$ d'après le (RÉSULTAT DIAMETRE CONVEXES) % TODO : à prouver peut-être
     \stopdiscussion
 
 
@@ -683,9 +689,68 @@
     \stopdem
 
 
-    \startdiscussion[Subdivision cristalline]
-      $\QED$
+    \startdiscussion[Triangulations cristallines]
+      % TODO
     \stopdiscussion
+
+
+    \startlemme[subdivisionsCristallines_complexeSimplicial][Subdivisions cristallines]
+      Si $\Delta$ est un complexe simplicial fini, alors il existe une suite $\famille{\Delta_k}{k \geq 1}$ de subdivisions de $\Delta$ telle que, pour tout $k$ et tout $\sigma \in \Delta_k$:
+      \startformula
+        \diam{\sigma} \leq \frac{C}{k}
+        \quad\text{et}\quad
+        \corp{\sigma} \geq \beta
+      \stopformula
+      où $C$ et $\beta$ sont des constantes strictement positives indépendantes de $k$.
+    \stoplemme
+
+    \startdem
+      % TODO: dém. du lemme de subdivision (utilise la triangulation cristalline)
+    \stopdem
+
+
+    \startdefinition
+      Soit $\Delta$ un complexe simplicial:
+      \startlisteEnum[fin]
+        \startitem
+          Une application continue $\application{f}{\realisation{\Delta} \fleche \reels^n}$ est dite \defterme{linéaire par morceaux} (resp. \defterme{lisse par morceaux}) si sa restriction à chaque simplexe de $\Delta$ est affine (resp. lisse).
+        \stopitem
+
+        \startitem
+          Étant donnée une application $\application{f}{\realisation{\Delta} \fleche \reels^n}$, son \defterme{redressement affine} est l'unique application $\realisation{\Delta} \fleche{} \reels^n$ linéaire par morceaux qui prend les mêmes valeurs que $f$ aux sommets de $\Delta$.
+        \stopitem
+      \stoplisteEnum
+    \stopdefinition
+
+
+    \startproposition[approximation_C1][Approximation $\creg{1}$]
+      Soit $\Delta$ un complexe simplicial fini.\\
+      Si $\application{f}{\realisation{\Delta} \fleche \reels}$ est lisse par morceaux, alors il existe des subdivisions $\Delta_k$ de $\Delta$ et une suite $\application{f_k}{\realisation{\Delta_k} \fleche \reels}$ de fonctions linéaires par morceaux qui converge $\creg{1}$-uniformément vers $f$.
+    \stopproposition
+
+    \startdem
+      On note $\famille{\Delta_k}{k \geq 1}$ la suite donnée par le \cref[lem:subdivisionsCristallines_complexeSimplicial], et $f_k$ le redressement affine de $f$ vis-à-vis de $\Delta_k$ pour tout $k \geq 1$. Les subdivisions $\Delta_k$ étant de plus en plus fines, la continuité uniforme de $f$ sur le compact $\realisation{\Delta}$ assure la convergence $\creg{0}$-uniforme de $\famille{f_k}{k \geq 1}$ vers $f$.
+
+      Il s'agit maintenant de montrer la convergence uniforme des $f_k'$ vers $f'$.\\
+      % TODO : à réécrire
+      On fixe un $\epsilon > 0$. Pour $k$ suffisamment grand, on a $\diam{f'\p{\sigma}} \leq \epsilon$ pour chaque simplexe $\sigma$ de $\Delta_k$ par continuité uniforme de $f'$.
+      
+      Si $\sigma = \cellule{a_0, \dots, a_s}$ est un simplexe de $\Delta_k$, alors $f_k'\p{x} = f_k'\p[]{a_0}$ par linéarité puis:
+      \startformula\startalign
+        \NC \abs{f_k'\p{x} - f'\p{x}} \NC \leq \abs{f_k'\p[]{a_0} - f'\p[]{a_0}} + \abs{f'\p[]{a_0} - f'\p{x}} \NR
+        \NC \NC \leq \abs{A\p[]{a_0}} + \epsilon \NR
+      \stopalign\stopformula
+      où $A$ désigne la forme linéaire $f_k'\p[]{a_0} - f'\p[]{a_0}$.
+
+      Pour $1 \leq i \leq s$, on a:
+      \startformula\startalign % TODO : créer macro différentielle (le cdot)
+        \NC A\p[]{a_i - a_0} \NC = f\p[]{a_i} - f\p[]{a_0} - f'\p[]{a_0} \cdot \p[]{a_i-a_0} \NR
+        \NC \NC = \p{f'\p[]{c_i} - f'\p[]{a_0}} \cdot \p[]{a_i - a_0} \NR
+      \stopalign\stopformula
+      où $c_i$ est un point du segment $\segment{a_0}{a_i} \subseteq \sigma$ dont l'existence est garantie par le théorème des accroissements finis.
+    \stopdem
+
+
   \stopsection
 
 

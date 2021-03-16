@@ -9,7 +9,7 @@
       { "ugly": "\\\\beta",       "pretty": "β", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\gamma",      "pretty": "γ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\delta",      "pretty": "δ", "post": "(?!\\w_)|$" },
-      { "ugly": "\\\\varepsilon", "pretty": "ε", "post": "(?!\\w_)|$" },
+      { "ugly": "\\\\epsilon",    "pretty": "ε", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\zeta",       "pretty": "ζ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\eta",        "pretty": "η", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\theta",      "pretty": "θ", "post": "(?!\\w_)|$" },
@@ -25,7 +25,7 @@
       { "ugly": "\\\\sigma",      "pretty": "σ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\tau",        "pretty": "τ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\upsilon",    "pretty": "υ", "post": "(?!\\w_)|$" },
-      { "ugly": "\\\\varphi",     "pretty": "φ", "post": "(?!\\w_)|$" },
+      { "ugly": "\\\\phi",        "pretty": "φ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\chi",        "pretty": "χ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\psi",        "pretty": "ψ", "post": "(?!\\w_)|$" },
       { "ugly": "\\\\omega",      "pretty": "ω", "post": "(?!\\w_)|$" },
@@ -95,7 +95,9 @@
       { "ugly": "\\\\iint",       "pretty": "∫∫" },
       { "ugly": "\\\\partial",    "pretty": "∂" },
       { "ugly": "\\\\frontiere",  "pretty": "∂" },
-      { "ugly": "\\\\reels",      "pretty": "𝗥", "post": "(?!\\w)|$" }
+      { "ugly": "\\\\naturels",   "pretty": "𝐍" }
+      { "ugly": "\\\\reels",      "pretty": "𝐑" }
+      { "ugly": "\\\\complexes",  "pretty": "𝐂" }
     ]
   }
 ],
