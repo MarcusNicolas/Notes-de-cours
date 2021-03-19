@@ -207,7 +207,7 @@
     width=fit,
     titleleft={---\enspace},
     titleright=,
-    after={\blank[5*quarterline]},
+    after={\blank[5*quarterline]\resetcounter[assertion]},
     way=bysection,
     prefixsegments=chapter:section,
     prefix=yes]
@@ -288,9 +288,9 @@
   \define\startdefinition
     {\dosingleempty\dostartdefinition}
 
-  \def\dostartdefinition[#1]{
-    \startdefinitionENUM[title=#1]
-    \page[no]
+  \def\dostartdefinition[#1]{%
+    \startdefinitionENUM[title=#1]%
+    \page[no]%
     \startlisereGauche}
     
   \define\stopdefinition{
@@ -303,10 +303,8 @@
   \defineenumeration[assertion][
     counter=assertion,
     text={Assertion},
-    prefix=no]
-
-  \setupcounter[assertion][way=bythm]
-
+    prefix=no,
+    after={\blank[5*quarterline]}]
 
 
   % Style = remarque

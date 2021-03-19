@@ -7,7 +7,38 @@
   %%%
   \startsection[title={Triangulation des variétés}]
 
-    Oui mais non % TODO
+    Soit $V$ une variété lisse. (POUR L'INSTANT COPIER COLLER DE ANALYSIS SITUS)
+
+    \startdefinition
+      Soient $X$ et $Y$ deux polyèdres compacts, $\application{f}{X \fleche V}$ et $\application{g}{Y \fleche V}$ sont deux plongements $\cregpm{\infty}$, et $W = f\p{X} \cap g\p{Y} \subseteq V$. On dit que $f$ et $g$ sont \defterme{compatibles} si:
+      \startlisteRom[fin]
+        \startitem
+          $\reciproque{f}\p{W} \subseteq X$ et $\reciproque{g}\p{W} \subseteq Y$ sont des sous-polyèdres de $X$ et de $Y$;
+        \stopitem
+
+        \startitem
+          $\application{\reciproque{g} \circ f}{\reciproque{f}\p{W} \fleche \reciproque{g}\p{W}}$ est un homéomorphisme linéaire par morceaux.
+        \stopitem
+      \stoplisteRom
+    \stopdefinition
+
+
+    \startlemme[][Recollement de plongements compatibles]
+      Si $\application{f}{X \fleche V}$ et $\application{g}{Y \fleche V}$ sont deux plongements $\cregpm{\infty}$ compatibles avec $X$ et $Y$ polyèdres compacts. En notant $W = f\p{X} \cap g\p{Y}$, alors le recollement $X \coprod_W Y$ a une structure de polyèdre vérifiant:
+      \startlisteRom[fin]
+        \startitem
+          $f$ et $g$ se recollent en un plongement lisse par morceaux $\application{f \cup g}{X \coprod_W Y \fleche V}$;
+        \stopitem
+
+        \startitem
+          un plongement lisse par morceaux $\application{h}{Z \fleche V}$ est compatible avec $f \cup g$ si et seulement si $f$ et $g$ sont compatibles avec $h$.
+        \stopitem
+      \stoplisteRom
+    \stoplemme
+
+    \startdem
+      OUI
+    \stopdem
 
   \stopsection
   

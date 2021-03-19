@@ -7,7 +7,7 @@
   \definemathcommand[conv][nolop]{\mfunction{conv}}
 
   \definemathcommand[diam][nolop]{\mfunction{diam}}
-  \definemathcommand[corp][nolop]{\mfunction{corp}}
+  \definemathcommand[corp][nolop]{\theta}
 
   \definemathcommand[faces][nolop]{\cal{}F}
   \definemathcommand[facesExp][nolop]{\faces_{\mfunction{exp}}}
@@ -16,16 +16,26 @@
   \definemathcommand[ptExt][nolop]{\mfunction{ext}}
 
 
+  
+  \define\realisation
+    {\dosingleempty\dorealisation}
+
+
+
   \define\frontiere{\partial}
   \define[2]\prodScal{\langle #1, #2 \rangle}
+  
 
+  \define\corp{\theta}
 
   \define[1]\creg{C^{#1}}
+  \define[1]\cregpm{\creg{#1}_\mathrm{pm}}
 
   
   \define[2]\squelette{#1^{\p{#2}}}
+  \define[2]\secante{L_{#1}^{#2}}
 
-  \define[1]\realisation{\abs{#1}}
-  \define[1]\cellule{\[\,#1\,\]}
+  \def\dorealisation[#1]#2{\abs[#1]{#2}}
+  \define[1]\cellule{\left\[#1\right\]}
 
 \stopenvironment

@@ -34,16 +34,96 @@
   \definemathcommand[parties][nolop]{\mathfrak{P}}
 
 
+
+  \define\classe
+    {\dosingleempty\doclasse}
+  \define\comprehension
+    {\dosingleempty\docomprehension}
+
   \define\p
     {\dosingleempty\dop}
+  \define\abs
+    {\dosingleempty\doabs}
+  \define\norme
+    {\dosingleempty\donorme}
+  \define\famille
+    {\dosingleempty\dofamille}
+    
+  \define\segment
+    {\dosingleempty\dosegment}
+  \define\intervalle
+    {\dosingleempty\dointervalle}
+
+  \def\doclasse[#1]#2{%
+    \iffirstargument%
+      \doifelse{*}{#1}
+        {\mathopen{}\left\{#2\right\}\mathclose{}}
+        {#1\{#2#1\}}%
+    \else%
+      \{#2\}%
+    \fi%
+  }
+  
+  \def\docomp[#1]#2#3{%
+    \classe[#1]{\:#2\;\,\doifelse{*}{#1}{\middle\vert}{#1\vert}\;\,#3\:}%
+  }
+  \def\docomprehension[#1]#2#3{%
+    \doifelse{#1}{}
+      {\docomp[\big]{#2}{#3}}
+      {\docomp[#1]  {#2}{#3}}%
+  }
 
   \def\dop[#1]#2{%
     \iffirstargument%
-      #1(#2#1)%
+      \doifelse{*}{#1}
+        {\mathopen{}\left(#2\right)\mathclose{}}
+        {#1(#2#1)}%
     \else%
-      \mathopen{}\left(#2\right)\mathclose{}%
+      (#2)%
     \fi%
   }
+
+  \def\doabs[#1]#2{%
+    \iffirstargument%
+      \doifelse{*}{#1}
+        {\mathopen{}\left\vert#2\right\vert\mathclose{}}
+        {#1\vert#2#1\vert}%
+    \else%
+      \vert#2\vert%
+    \fi%
+  }
+
+  \def\donorme[#1]#2{%
+    \iffirstargument%
+      \doifelse{*}{#1}
+        {\mathopen{}\left\Vert#2\right\Vert\mathclose{}}
+        {#1\Vert#2#1\Vert}%
+    \else%
+      \Vert#2\Vert%
+    \fi%
+  }
+
+  \def\dosegment[#1]#2#3{%
+    \iffirstargument%
+      \doifelse{*}{#1}
+        {\mathopen{}\left\[#2,#3\right\]\mathclose{}}
+        {#1\[#2,#3#1\]}%
+    \else%
+      \[#2,#3\]%
+    \fi%
+  }
+
+  \def\dointervalle[#1]#2#3{%
+    \iffirstargument%
+      \doifelse{*}{#1}
+        {\mathopen{}\left\]#2,#3\right\[\mathclose{}}
+        {#1\]#2,#3#1\[}%
+    \else%
+      \]#2,#3\[%
+    \fi%
+  }
+
+  \def\dofamille[#1]#2#3{\p[#1]{#2}_{#3}}
 
 
   \def\epsilon{\varepsilon}
@@ -51,23 +131,10 @@
 
 
 
-  \define[1]\abs{\mathopen{}\left\vert#1\right\vert\mathclose{}}
-
-
-  \define[1]\classe
-    {\mathopen{}\left\{#1\right\}\mathclose{}}
-  
-  \define[2]\comprehension
-    {\classe{\:#1\;\,\middle|\,\;#2\:}}
-
-
   \define[2]\application{#1 \colon #2}
+  \define[2]\restriction{#1_{\mid #2}}
+  \define[1]\reciproque{#1^{-1}}
   \define\fleche{\rightarrow}
-
-  \define[2]\famille{\p{#1}_{#2}}
-
-  \define[2]\segment{\left\[ #1, #2 \right\]}
-  \define[2]\intervalle{\left\] #1, #2 \right\[}
 
 
   \define\iso{\simeq}
@@ -76,5 +143,7 @@
   \define\naturels{{\mathbf{N}}}
   \define\reels{{\mathbf{R}}}
   \define\complexes{{\mathbf{C}}}
+
+  \define\grpSym{{\mathfrak{S}}}
 
 \stopenvironment

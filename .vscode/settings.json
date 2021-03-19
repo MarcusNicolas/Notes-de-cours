@@ -98,6 +98,7 @@
       { "ugly": "\\\\naturels",   "pretty": "𝐍" }
       { "ugly": "\\\\reels",      "pretty": "𝐑" }
       { "ugly": "\\\\complexes",  "pretty": "𝐂" }
+      { "ugly": "\\\\grpSym",     "pretty": "𝕾" }
     ]
   }
 ],
